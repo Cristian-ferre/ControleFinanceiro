@@ -14,6 +14,7 @@ namespace ControleFinanceiro.Dominio.Entities
 
         // atributos:
 
+        [Required]
         public string Name { get; set; }
 
 

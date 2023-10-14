@@ -7,12 +7,15 @@ namespace ControleFinanceiro.Dominio.Entities
 {
     class Despesas
     {
+        [Key]
         public int DespesaId { get; set; }
 
         // atributo
-
+        [Required]
+        [StringLength(50)]
         public string DespesaName { get; set; }
 
+        [StringLength(100)]
         public string DespesaDescricao { get; set; }
 
 

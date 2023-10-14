@@ -1,6 +1,7 @@
 ﻿using ControleFinanceiro.Dominio.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,13 +10,16 @@ namespace ControleFinanceiro.Dominio.Entities
 {
      class Receitas
     {
-
+        [Key]
         public int ReceitaId { get; set; }
 
         // atributo
 
+        [Required]
+        [StringLength(50)]
         public string ReceitaName { get; set; }
 
+        [StringLength(100)]
         public string ReceitaDescricao { get; set; }
 
 

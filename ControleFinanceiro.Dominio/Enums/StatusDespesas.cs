@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControleFinanceiro.Dominio.Enums
 {
-    enum  StatusDespesas : int
+    public enum  StatusDespesas : int
     {
         Concluido = 0,
         Pendente = 1,

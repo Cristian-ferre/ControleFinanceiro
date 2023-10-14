@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControleFinanceiro.Dominio.Enums
 {
-    enum  TipoValor : int
+    public enum  TipoValor : int
     {
         Fixo = 0,
         Variavel = 1

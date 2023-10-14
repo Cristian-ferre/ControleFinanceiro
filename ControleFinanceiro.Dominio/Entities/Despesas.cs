@@ -5,7 +5,7 @@ using ControleFinanceiro.Dominio.Enums;
 
 namespace ControleFinanceiro.Dominio.Entities
 {
-    class Despesas
+    public class Despesas
     {
         [Key]
         public int DespesaId { get; set; }

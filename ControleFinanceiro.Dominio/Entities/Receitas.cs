@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ControleFinanceiro.Dominio.Entities
 {
-     class Receitas
+     public class Receitas
     {
         [Key]
         public int ReceitaId { get; set; }

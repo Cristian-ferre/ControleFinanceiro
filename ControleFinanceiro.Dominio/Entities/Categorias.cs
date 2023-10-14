@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ControleFinanceiro.Dominio.Entities
 {
-     class Categorias
+     public class Categorias
     {
         [Key]
         public int CategoriaId { get; set; }

@@ -10,7 +10,11 @@ namespace ControleFinanceiro.Dados.Context
 {
      public class ControleFinanceiroDbContext : DbContext
     {
-        public ControleFinanceiroDbContext(DbContextOptions<ControleFinanceiroDbContext> options) : base(options) { }
+       
+        public ControleFinanceiroDbContext(DbContextOptions<ControleFinanceiroDbContext> options) : base(options)
+        {
+        }
+
 
 
         public DbSet<Categorias> Categorias { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using ControleFinanceiro.Dominio.Enums;
 
 
@@ -32,10 +33,13 @@ namespace ControleFinanceiro.Dominio.Entities
         public StatusDespesas StatusDespesas { get; set; }
 
         // Relacionamentos
-
-        public int UsuariosId { get; set; }
+        [Required]
+        [ForeignKey("Usuarios")]
+        public int UsuarioId { get; set; }
         public Usuarios Usuarios { get; set; }
 
+        [Required]
+        [ForeignKey("Categorias")]
         public int CategoriaId { get; set; }
         public Categorias Categorias { get; set; }
 

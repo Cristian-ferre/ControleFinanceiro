@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,8 @@ namespace ControleFinanceiro.Dominio.Entities
 
         // Relacionamentos e FKs
 
+        [Required]
+        [ForeignKey("Usuarios")]
         public int UsuarioId { get; set; } 
         public Usuarios Usuarios { get; set; }
     }

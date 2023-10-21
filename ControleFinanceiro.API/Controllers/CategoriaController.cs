@@ -1,7 +1,6 @@
 ﻿using ControleFinanceiro.Dados.Context;
 using ControleFinanceiro.Dominio.DTOs;
 using ControleFinanceiro.Dominio.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFinanceiro.API.Controllers
@@ -43,6 +42,14 @@ namespace ControleFinanceiro.API.Controllers
             }
 
         }
+
+
+
+        //Aqui tera um metodo de deletar categoria
+        //Quando uma categoria for excluida todas as depesas tambêm seram excluidas
+        //Então, primeiro vou desenvolver o método delete despesas para despois vir para deleteCategoria
+        //21/10/2023 - Cristian
+
 
     }
 }

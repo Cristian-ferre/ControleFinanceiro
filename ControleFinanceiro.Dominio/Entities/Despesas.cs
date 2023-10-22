@@ -23,9 +23,9 @@ namespace ControleFinanceiro.Dominio.Entities
         public double DespesaValor { get; set; }
 
 
-        public DateTime Data { get; set; }
+        public DateTime DespesasData { get; set; }
 
-        public int QuantiadeFrequenciaMeses { get; set; }
+        public int DespesasQuantidadeMeses { get; set; }
 
         // Enum
 

@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using ControleFinanceiro.Dados.Context;
 using Microsoft.Extensions.Configuration;
+using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Options;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +16,27 @@ builder.Services.AddDbContext<ControleFinanceiroDbContext>(options =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+//Adionando Comentarios nos metodos da api no swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "ControleFinanceiro.API",
+        Version = "v1",
+        Contact = new OpenApiContact
+        {
+            Name = "Cristian Ferreira",
+            Email = "cristianferreiradeoliveira.ti@gmail.com",
+            Url = new Uri("https://www.linkedin.com/in/cristianferreiradeoliveira/")
+        }
+    });
+    var xmlFile = "ControleFinanceiro.API.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+}
+
+    );
 
 
 

@@ -19,9 +19,11 @@ namespace ControleFinanceiro.API.Controllers
         /// <summary>
         /// Cadastro de Novas Receitas. 
         /// </summary>
-        /// <param name="receitas"></param>
-        /// <returns></returns>
+        /// <param name="receitas">Dados da Receita</param>
+        /// <returns> receita Recém-criada</returns>
+        /// <response code="201">Sucesso</response>
         [HttpPost("ControleFianceiro/AdicinarNovaReceita")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult postReceita([FromBody] ReceitaDTO receitas)
         {
             try

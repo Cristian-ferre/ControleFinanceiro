@@ -1,9 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ControleFinanceiro.Dados.Context;
-using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.Options;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,14 +25,13 @@ builder.Services.AddSwaggerGen(c =>
         {
             Name = "Cristian Ferreira",
             Email = "cristianferreiradeoliveira.ti@gmail.com",
-            Url = new Uri("https://www.linkedin.com/in/cristianferreiradeoliveira/")
+            Url = new Uri("https://linktr.ee/cristian.ferreira?fbclid=PAAaaFsHJuRyieNtJB1P4UgeeULBhf051-10USj81D1h0HyWGqhppXDF2XnB8")
         }
     });
     var xmlFile = "ControleFinanceiro.API.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 }
-
     );
 
 

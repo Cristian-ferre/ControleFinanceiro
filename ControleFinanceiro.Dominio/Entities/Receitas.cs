@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ControleFinanceiro.Dominio.Entities
 {
-     public class Receitas
+    public class Receitas
     {
         [Key]
         public int ReceitaId { get; set; }
@@ -28,8 +28,7 @@ namespace ControleFinanceiro.Dominio.Entities
 
         public DateTime ReceitaData { get; set; }
 
-        public int ReceitaQuantidadeMeses { get; set; }
-
+        public DateTime ReceitaDataFim { get; set; }
 
         // Enum
 
@@ -39,7 +38,7 @@ namespace ControleFinanceiro.Dominio.Entities
 
         [Required]
         [ForeignKey("Usuarios")]
-        public int UsuarioId { get; set; } 
+        public int UsuarioId { get; set; }
         public Usuarios Usuarios { get; set; }
     }
 }

@@ -42,5 +42,12 @@ namespace ControleFinanceiro.API.Controllers
 
             }
         }
+
+
+        //[HttpGet("ControleFianceiro/ExibirTodasReceitas")]
+        //public ActionResult getAllReceita()
+        //{
+
+        //}
     }
 }

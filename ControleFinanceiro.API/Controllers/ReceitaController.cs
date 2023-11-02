@@ -15,6 +15,12 @@ namespace ControleFinanceiro.API.Controllers
             _context = context;
         }
 
+
+        /// <summary>
+        /// Cadastro de Novas Receitas. 
+        /// </summary>
+        /// <param name="receitas"></param>
+        /// <returns></returns>
         [HttpPost("ControleFianceiro/AdicinarNovaReceita")]
         public ActionResult postReceita([FromBody] ReceitaDTO receitas)
         {

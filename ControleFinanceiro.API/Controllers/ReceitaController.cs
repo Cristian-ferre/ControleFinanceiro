@@ -1,6 +1,7 @@
 ﻿using ControleFinanceiro.Dados.Context;
 using ControleFinanceiro.Dominio.DTOs;
 using ControleFinanceiro.Dominio.Entities;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFinanceiro.API.Controllers
@@ -51,11 +52,34 @@ namespace ControleFinanceiro.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Excluir Receita
+        /// </summary>
+        /// <param name="receitaId"> Informe o ID da Recita</param>
+        [HttpDelete("ControleFianceiro/DeletarReceita")]
+        public ActionResult DeleteReceita(int receitaId)
+        {
+            var receita = _context.Receitas.FirstOrDefault(r => r.ReceitaId == receitaId);
 
-        //[HttpGet("ControleFianceiro/ExibirTodasReceitas")]
-        //public ActionResult getAllReceita()
-        //{
+            if (receita == null)
+            {
+                return NotFound(new { success = false, message = "Não foi possivel remover, tente novamente!!" });
+            }
 
-        //}
+            try
+            {
+                _context.Receitas.Remove(receita);
+                _context.SaveChanges();
+
+                return Ok(new { success = true, message = $"Receita {receita.ReceitaName} removida" });
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, error = "Erro interno no servidor", message = ex.Message });
+
+            }
+
+        }
     }
 }

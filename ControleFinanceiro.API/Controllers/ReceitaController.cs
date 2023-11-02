@@ -81,5 +81,26 @@ namespace ControleFinanceiro.API.Controllers
             }
 
         }
+
+        /// <summary>
+        /// Exibir todas as receitas
+        /// </summary>
+        [HttpGet("ControleFinanceiro/ExibirTodasReceitas")]
+        public ActionResult GetAllReceitas()
+        {
+
+            try
+            {
+                var allreceitas = _context.Receitas.ToList();
+
+
+                return Ok(allreceitas);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Ocorreu um erro interno no servidor" });
+
+            }
+        }
     }
 }

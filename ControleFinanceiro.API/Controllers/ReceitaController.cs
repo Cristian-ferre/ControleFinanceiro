@@ -36,7 +36,7 @@ namespace ControleFinanceiro.API.Controllers
                     ReceitaDescricao = receitas.ReceitaDescricao,
                     ReceitaValor = receitas.ReceitaValor,
                     ReceitaData = receitas.ReceitaData,
-                    ReceitaQuantidadeMeses = receitas.ReceitaQuantidadeMeses,
+                    //ReceitaQuantidadeMeses = receitas.ReceitaQuantidadeMeses,
                     UsuarioId = receitas.UsuarioId,
                 };
 

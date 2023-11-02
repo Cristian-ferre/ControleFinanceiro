@@ -27,6 +27,12 @@ namespace ControleFinanceiro.API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult postReceita([FromBody] ReceitaDTO receitas)
         {
+
+            //Somando a data atual com a quantidade de meses que uma receita ficara ativa
+            DateTime dataAtual = DateTime.Now;
+            DateTime receitaDataFim = dataAtual.AddMonths(receitas.ReceitaQuantidadeMeses);
+
+
             try
             {
                 var Receitas = new Receitas
@@ -37,6 +43,7 @@ namespace ControleFinanceiro.API.Controllers
                     ReceitaValor = receitas.ReceitaValor,
                     ReceitaData = receitas.ReceitaData,
                     //ReceitaQuantidadeMeses = receitas.ReceitaQuantidadeMeses,
+                    ReceitaDataFim = receitaDataFim,
                     UsuarioId = receitas.UsuarioId,
                 };
 

@@ -23,7 +23,7 @@ namespace ControleFinanceiro.Dominio.Entities
         public double DespesaValor { get; set; }
 
 
-        public DateTime DespesasData { get; set; }
+        public DateOnly DespesasData { get; set; }
 
         public int DespesasQuantidadeMeses { get; set; }
 

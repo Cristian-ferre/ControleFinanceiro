@@ -26,9 +26,9 @@ namespace ControleFinanceiro.Dominio.Entities
 
         public double ReceitaValor { get; set; }
 
-        public DateTime ReceitaData { get; set; }
+        public DateOnly ReceitaData { get; set; }
 
-        public DateTime ReceitaDataFim { get; set; }
+        public DateOnly ReceitaDataFim { get; set; }
 
         // Enum
 

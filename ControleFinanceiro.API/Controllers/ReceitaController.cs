@@ -93,21 +93,14 @@ namespace ControleFinanceiro.API.Controllers
         /// Exibir todas as receitas
         /// </summary>
         [HttpGet("ControleFinanceiro/ExibirTodasReceitas")]
-        public ActionResult GetAllReceitas()
+        public ActionResult GetAllReceitas(DateTime dataEscolhida)
         {
 
-            try
-            {
-                var allreceitas = _context.Receitas.ToList();
+            var receitasNoIntervalo = _context.Receitas
+    .Where(r => (r.ReceitaData <= dataEscolhida && (r.ReceitaDataFim == null || r.ReceitaDataFim >= dataEscolhida)) || r.ReceitaData == dataEscolhida)
+    .ToList();
 
-
-                return Ok(allreceitas);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { success = false, message = "Ocorreu um erro interno no servidor" });
-
-            }
+            return Ok(receitasNoIntervalo);
         }
     }
 }

@@ -93,12 +93,18 @@ namespace ControleFinanceiro.API.Controllers
         /// Exibir todas as receitas
         /// </summary>
         [HttpGet("ControleFinanceiro/ExibirTodasReceitas")]
-        public ActionResult GetAllReceitas(DateTime dataEscolhida)
+        public ActionResult GetAllReceitas(DateOnly dataParaExibir)
         {
+            // Converte DateOnly em DateTime com horário definido como meia-noite   
+            DateTime dataEscolhida = dataParaExibir.ToDateTime(new TimeOnly(0, 0, 0, 0));
+
 
             var receitasNoIntervalo = _context.Receitas
-    .Where(r => (r.ReceitaData <= dataEscolhida && (r.ReceitaDataFim == null || r.ReceitaDataFim >= dataEscolhida)) || r.ReceitaData == dataEscolhida)
+    .Where(r => (r.ReceitaData <= dataEscolhida && (r.ReceitaDataFim == null || r.ReceitaDataFim >= dataEscolhida))
+    || r.ReceitaData.Month == dataEscolhida.Month)
     .ToList();
+
+
 
             return Ok(receitasNoIntervalo);
         }

@@ -104,6 +104,15 @@ namespace ControleFinanceiro.API.Controllers
     || r.ReceitaData.Month == dataEscolhida.Month)
     .ToList();
 
+            var ReceitaGetDTO = receitasNoIntervalo.Select(receita => new ReceitaGetDTO
+            {
+                ReceitaId = receita.ReceitaId,
+                ReceitaName = receita.ReceitaName,
+                ReceitaDescricao = receita.ReceitaDescricao,
+                ReceitaData = receita.ReceitaData,
+                ReceitaQuantidadeMeses =
+            }).ToList();
+
 
 
             return Ok(receitasNoIntervalo);

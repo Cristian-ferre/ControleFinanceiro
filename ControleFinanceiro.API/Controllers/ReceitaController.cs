@@ -100,19 +100,34 @@ namespace ControleFinanceiro.API.Controllers
             DateTime dataEscolhida = dataParaExibir.ToDateTime(new TimeOnly(0, 0, 0, 0));
 
 
+            //        var receitasNoIntervalo = _context.Receitas
+            //.Where(r =>
+            //    (r.ReceitaData.Year == dataEscolhida.Year &&
+            //     r.ReceitaData.Month == dataEscolhida.Month &&
+            //     r.ReceitaData.Day == dataEscolhida.Day) ||
+            //    (r.ReceitaData <= dataEscolhida && (r.ReceitaDataFim == null || r.ReceitaDataFim >= dataEscolhida))
+            //)
+            //.ToList();
+
+            // ENDPOINT
+            // Basicamento os as receitas que serão exibidas vão ser por mes e ano
+            // MELHORAR O COMENTARIO!!!
             var receitasNoIntervalo = _context.Receitas
-    .Where(r => (r.ReceitaData <= dataEscolhida && (r.ReceitaDataFim == null || r.ReceitaDataFim >= dataEscolhida))
-    || r.ReceitaData.Month == dataEscolhida.Month)
+    .Where(r =>
+        (r.ReceitaData.Year == dataEscolhida.Year &&
+         r.ReceitaData.Month == dataEscolhida.Month) ||
+        (r.ReceitaData <= dataEscolhida && (r.ReceitaDataFim == null || r.ReceitaDataFim >= dataEscolhida))
+    )
     .ToList();
 
-            var ReceitaGetDTO = receitasNoIntervalo.Select(receita => new ReceitaGetDTO
-            {
-                ReceitaId = receita.ReceitaId,
-                ReceitaName = receita.ReceitaName,
-                ReceitaDescricao = receita.ReceitaDescricao,
-                ReceitaData = receita.ReceitaData,
+            //var ReceitaGetDTO = receitasNoIntervalo.Select(receita => new ReceitaGetDTO
+            //{
+            //    ReceitaId = receita.ReceitaId,
+            //    ReceitaName = receita.ReceitaName,
+            //    ReceitaDescricao = receita.ReceitaDescricao,
+            //    ReceitaData = receita.ReceitaData,
 
-            }).ToList();
+            //}).ToList();
 
 
 

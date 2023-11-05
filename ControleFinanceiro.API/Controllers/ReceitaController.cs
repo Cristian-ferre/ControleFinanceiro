@@ -29,8 +29,8 @@ namespace ControleFinanceiro.API.Controllers
         {
 
             //Somando a data atual com a quantidade de meses que uma receita ficara ativa
-            DateTime dataAtual = DateTime.Now;
-            DateTime receitaDataFim = dataAtual.AddMonths(receitas.ReceitaQuantidadeMeses);
+            //DateTime dataAtual = DateTime.Now;
+            DateTime receitaDataFim = receitas.ReceitaData.AddMonths(receitas.ReceitaQuantidadeMeses);
 
 
             try
@@ -43,6 +43,7 @@ namespace ControleFinanceiro.API.Controllers
                     ReceitaValor = receitas.ReceitaValor,
                     ReceitaData = receitas.ReceitaData,
                     //ReceitaQuantidadeMeses = receitas.ReceitaQuantidadeMeses,
+                    //ReceitaDataFim = receitas.ReceitaDataFim,
                     ReceitaDataFim = receitaDataFim,
                     UsuarioId = receitas.UsuarioId,
                 };
@@ -110,7 +111,7 @@ namespace ControleFinanceiro.API.Controllers
                 ReceitaName = receita.ReceitaName,
                 ReceitaDescricao = receita.ReceitaDescricao,
                 ReceitaData = receita.ReceitaData,
-                ReceitaQuantidadeMeses =
+
             }).ToList();
 
 

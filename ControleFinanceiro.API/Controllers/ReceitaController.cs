@@ -1,7 +1,6 @@
 ﻿using ControleFinanceiro.Dados.Context;
 using ControleFinanceiro.Dominio.DTOs;
 using ControleFinanceiro.Dominio.Entities;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFinanceiro.API.Controllers
@@ -15,7 +14,6 @@ namespace ControleFinanceiro.API.Controllers
         {
             _context = context;
         }
-
 
         /// <summary>
         /// Cadastro de Novas Receitas. 
@@ -31,7 +29,6 @@ namespace ControleFinanceiro.API.Controllers
             //Somando a data atual com a quantidade de meses que uma receita ficara ativa
             //DateTime dataAtual = DateTime.Now;
             DateTime receitaDataFim = receitas.ReceitaData.AddMonths(receitas.ReceitaQuantidadeMeses);
-
 
             try
             {
@@ -56,7 +53,6 @@ namespace ControleFinanceiro.API.Controllers
             catch
             {
                 return StatusCode(500, new { success = false, message = "Ocorreu um erro interno no servidor" });
-
             }
         }
 
@@ -128,7 +124,40 @@ namespace ControleFinanceiro.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Editar Receitas. 
+        /// </summary>
+        /// <param>Informar o ID da Receita</param>
+        /// <returns> receita Editada</returns>
+        [HttpPut("ControleFinanceiro/EditarReceita")]
+        public ActionResult PutReceita(int receitaId, [FromBody] ReceitaDTO receitaAtualizada)
+        {
+            var receiraExistente = _context.Receitas.FirstOrDefault(r => r.ReceitaId == receitaId);
 
+            //Somando a data atual com a quantidade de meses que uma receita ficara ativa
+            DateTime receitaDataFim = receitaAtualizada.ReceitaData.AddMonths(receitaAtualizada.ReceitaQuantidadeMeses);
+
+            try
+            {
+                receiraExistente.ReceitaName = receitaAtualizada.ReceitaName;
+                receiraExistente.ReceitaDescricao = receitaAtualizada.ReceitaDescricao;
+                receiraExistente.ReceitaData = receitaAtualizada.ReceitaData;
+                receiraExistente.ReceitaDataFim = receitaDataFim;
+                receiraExistente.ReceitaValor = receitaAtualizada.ReceitaValor;
+                receiraExistente.TipoValor = receitaAtualizada.TipoValor;
+
+                // Salve as alterações no banco de dados
+                _context.SaveChanges();
+
+                return Ok(new { success = true, message = $"Receita editada com sucesso!!" });
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, error = "Erro interno no servidor", message = ex.Message });
+
+            }
+        }
 
     }
 }

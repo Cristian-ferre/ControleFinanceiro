@@ -16,7 +16,7 @@ namespace ControleFinanceiro.Dominio.DTOs
 
         public DateTime ReceitaData { get; set; }
 
-        public int ReceitaQuantidadeMeses { get; set; }
+        public DateTime ReceitaDataFim { get; set; }
 
         public TipoValor TipoValor { get; set; }
 

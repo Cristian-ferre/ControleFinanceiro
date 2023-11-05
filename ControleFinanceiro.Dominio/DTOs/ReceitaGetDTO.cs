@@ -1,5 +1,4 @@
-﻿using ControleFinanceiro.Dominio.Entities;
-using ControleFinanceiro.Dominio.Enums;
+﻿using ControleFinanceiro.Dominio.Enums;
 
 namespace ControleFinanceiro.Dominio.DTOs
 {

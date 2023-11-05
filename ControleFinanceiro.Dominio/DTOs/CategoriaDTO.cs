@@ -1,5 +1,4 @@
-﻿
-namespace ControleFinanceiro.Dominio.DTOs
+﻿namespace ControleFinanceiro.Dominio.DTOs
 {
     public class CategoriaDTO
     {

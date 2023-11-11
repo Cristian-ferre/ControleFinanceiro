@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFinanceiro.API.Controllers
 {
+    [Route("ControleFinanceiro/Receita/")]
     public class ReceitaController : Controller
     {
 
@@ -21,9 +22,9 @@ namespace ControleFinanceiro.API.Controllers
         /// <param name="receitas">Dados da Receita</param>
         /// <returns> receita Recém-criada</returns>
         /// <response code="201">Sucesso</response>
-        [HttpPost("ControleFianceiro/AdicinarNovaReceita")]
+        [HttpPost("Adicionar")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public ActionResult postReceita([FromBody] ReceitaDTO receitas)
+        public ActionResult adicionarReceita([FromBody] ReceitaDTO receitas)
         {
 
             //Somando a data atual com a quantidade de meses que uma receita ficara ativa
@@ -60,8 +61,8 @@ namespace ControleFinanceiro.API.Controllers
         /// Excluir Receita
         /// </summary>
         /// <param name="receitaId"> Informe o ID da Recita</param>
-        [HttpDelete("ControleFianceiro/DeletarReceita")]
-        public ActionResult DeleteReceita(int receitaId)
+        [HttpDelete("Deletar")]
+        public ActionResult DeletarReceita(int receitaId)
         {
             var receita = _context.Receitas.FirstOrDefault(r => r.ReceitaId == receitaId);
 
@@ -90,8 +91,8 @@ namespace ControleFinanceiro.API.Controllers
         /// Exibir todas as receitas Variaveis e Fixas com base no ano e mês
         /// </summary>
         /// <param >Informe a Data atual </param>
-        [HttpGet("ControleFinanceiro/ExibirTodasReceitas")]
-        public ActionResult GetAllReceitas(DateOnly dataParaExibir)
+        [HttpGet("ExibirTodas")]
+        public ActionResult exibirTodasReceitas(DateOnly dataParaExibir)
         {
             // Converte DateOnly em DateTime com horário definido como meia-noite   
             DateTime dataEscolhida = dataParaExibir.ToDateTime(new TimeOnly(0, 0, 0, 0));
@@ -129,8 +130,8 @@ namespace ControleFinanceiro.API.Controllers
         /// </summary>
         /// <param>Informar o ID da Receita</param>
         /// <returns> receita Editada</returns>
-        [HttpPut("ControleFinanceiro/EditarReceita")]
-        public ActionResult PutReceita(int receitaId, [FromBody] ReceitaDTO receitaAtualizada)
+        [HttpPut("Editar")]
+        public ActionResult EditarReceita(int receitaId, [FromBody] ReceitaDTO receitaAtualizada)
         {
             var receiraExistente = _context.Receitas.FirstOrDefault(r => r.ReceitaId == receitaId);
 

@@ -151,15 +151,5 @@ namespace ControleFinanceiro.API.Controllers
                 return StatusCode(500, new { success = false, error = "Erro interno no servidor", message = ex.Message });
             }
         }
-
-
-
-
-
-
-
-
-
-
     }
 }

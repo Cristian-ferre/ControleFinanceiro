@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ControleFinanceiro.Dados.Context;
 using Microsoft.OpenApi.Models;
+using ControleFinanceiro.Dados;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,10 +9,12 @@ builder.Services.AddDbContext<ControleFinanceiroDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ControleFinanceiroDbConnection")));
 
 
-// Add services to the container.
+//Utilizando um método de extensão para facilitar a organização
+builder.Services.adicionarDependecias();
+
+
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 //Adionando Comentarios nos metodos da api no swagger
@@ -38,7 +41,6 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

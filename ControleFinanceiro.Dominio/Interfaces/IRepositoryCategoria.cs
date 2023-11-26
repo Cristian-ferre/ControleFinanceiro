@@ -7,6 +7,6 @@ namespace ControleFinanceiro.Dominio.Interfaces
     {
         object Adicionar (CategoriaDTO categorias);
 
-        ICollection<Categorias> ObterTodas(int CategoriaID);
+        ICollection<Categorias> ObterTodas();
     }
 }

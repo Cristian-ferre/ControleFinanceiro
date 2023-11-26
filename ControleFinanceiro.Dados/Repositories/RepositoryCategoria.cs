@@ -41,9 +41,17 @@ namespace ControleFinanceiro.Dados.Repositories
             }
         }
 
-        public ICollection<Categorias> ObterTodas(int CategoriaID)
+        public ICollection<Categorias> ObterTodas()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var categorias =  _context.Categorias.ToList();
+                return categorias;
+            }
+            catch
+            {
+                return new List<Categorias>();
+            }
         }
     }
 }

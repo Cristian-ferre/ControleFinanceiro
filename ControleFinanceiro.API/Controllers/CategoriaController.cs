@@ -11,27 +11,28 @@ namespace ControleFinanceiro.API.Controllers
     public class CategoriaController : Controller
     {
 
-        private readonly IRepositoryCategoria repositoryCategoria;
+        private readonly IRepositoryCategoria _repositoryCategoria;
 
         public CategoriaController(IRepositoryCategoria repositoryCategoria)
         {
-            repositoryCategoria = repositoryCategoria;
+            _repositoryCategoria = repositoryCategoria;
         }
 
         [HttpPost("Adicionar")]
         public ActionResult Adicionar([FromBody] CategoriaDTO categorias)
         {
-            var result = repositoryCategoria.Adicionar(categorias);
+            var result = _repositoryCategoria.Adicionar(categorias);
+            return Ok(result);
+        }
+
+        [HttpGet("ObterTodas")]
+        public ActionResult ObterTodas()
+        {
+            var result = _repositoryCategoria.ObterTodas();
             return Ok(result);
         }
 
 
-
-        //Aqui tera um metodo de deletar categoria
-        //Quando uma categoria for excluida todas as depesas tambêm seram excluidas
-        //Então, primeiro vou desenvolver o método delete despesas para despois vir para deleteCategoria
-        //21/10/2023 - Cristian
-
-
+      
     }
 }

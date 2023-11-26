@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFinanceiro.API.Controllers
 {
+    [Route("ControleFinanceiro/Categoria/")]
     public class CategoriaController : Controller
     {
 
@@ -15,8 +16,8 @@ namespace ControleFinanceiro.API.Controllers
             _context = context;
         }
 
-        [HttpPost("ControleFianceiro/AdicinarNovaCategoria")]
-        public ActionResult PostCategoria([FromBody] CategoriaDTO categorias)
+        [HttpPost("Adicionar")]
+        public ActionResult Adicionar([FromBody] CategoriaDTO categorias)
         {
             try
             {

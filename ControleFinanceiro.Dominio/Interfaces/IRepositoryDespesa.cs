@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ControleFinanceiro.Dominio.DTOs;
+using ControleFinanceiro.Dominio.Entities;
 
 namespace ControleFinanceiro.Dominio.Interfaces
 {
-    internal interface IRepositoryDespesa
+    public interface IRepositoryDespesa
     {
+        object Adicionar(DespesaDTO despesa);
+
+        object Atualizar (DespesaDTO despesa);
+
+        object Remover(Despesas despesasID);
+
+        ICollection<DespesaDTO> ObterTodas();
+
+        //Filtros para Obter:
     }
 }

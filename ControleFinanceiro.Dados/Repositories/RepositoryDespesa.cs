@@ -1,12 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ControleFinanceiro.Dominio.DTOs;
+using ControleFinanceiro.Dominio.Entities;
+using ControleFinanceiro.Dominio.Interfaces;
 
 namespace ControleFinanceiro.Dados.Repositories
 {
-    internal class RepositoryDespesa
+    public class RepositoryDespesa : IRepositoryDespesa
     {
+        public object Adicionar(DespesaDTO despesa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object Atualizar(DespesaDTO despesa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICollection<DespesaDTO> ObterTodas()
+        {
+            throw new NotImplementedException();
+        }
+
+        public object Remover(Despesas despesasID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

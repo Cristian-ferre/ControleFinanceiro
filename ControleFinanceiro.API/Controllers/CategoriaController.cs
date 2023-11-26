@@ -1,6 +1,8 @@
 ﻿using ControleFinanceiro.Dados.Context;
+using ControleFinanceiro.Dados.Repositories;
 using ControleFinanceiro.Dominio.DTOs;
 using ControleFinanceiro.Dominio.Entities;
+using ControleFinanceiro.Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFinanceiro.API.Controllers
@@ -9,39 +11,18 @@ namespace ControleFinanceiro.API.Controllers
     public class CategoriaController : Controller
     {
 
-        private ControleFinanceiroDbContext _context;
+        private readonly IRepositoryCategoria repositoryCategoria;
 
-        public CategoriaController(ControleFinanceiroDbContext context)
+        public CategoriaController(IRepositoryCategoria repositoryCategoria)
         {
-            _context = context;
+            repositoryCategoria = repositoryCategoria;
         }
 
         [HttpPost("Adicionar")]
         public ActionResult Adicionar([FromBody] CategoriaDTO categorias)
         {
-            try
-            {
-                if (categorias == null)
-                {
-                    return BadRequest("Dados de categoria inválidos");
-                }
-
-                var Categorias = new Categorias
-                {
-                    CategoriaNome = categorias.CategoriaNome,
-                    CategoriaDescricao = categorias.CategoriaDescricao,
-                };
-
-                _context.Categorias.Add(Categorias);
-                _context.SaveChanges();
-
-                return Json(new { success = true, message = $"{Categorias.CategoriaNome} Inserido com sucesso" });
-            }
-            catch
-            {
-                return StatusCode(500, new { success = false, message = "Ocorreu um erro interno no servidor" });
-            }
-
+            var result = repositoryCategoria.Adicionar(categorias);
+            return Ok(result);
         }
 
 

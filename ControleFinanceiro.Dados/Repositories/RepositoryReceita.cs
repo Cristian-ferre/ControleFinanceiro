@@ -7,7 +7,7 @@ namespace ControleFinanceiro.Dados.Repositories
     public class RepositoryReceita : IRepositoryReceita
     {
 
-        private ControleFinanceiroDbContext _context;
+        private readonly ControleFinanceiroDbContext _context;
 
         public RepositoryReceita(ControleFinanceiroDbContext context)
         {

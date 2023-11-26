@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using ControleFinanceiro.Dados.Context;
 using Microsoft.OpenApi.Models;
 using ControleFinanceiro.Dados;
+using Microsoft.AspNetCore.Hosting;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,15 @@ builder.Services.AddDbContext<ControleFinanceiroDbContext>(options =>
 
 //Utilizando um método de extensão para facilitar a organização
 builder.Services.adicionarDependecias();
+
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    // Configurações do Kestrel vão aqui
+    serverOptions.ListenAnyIP(5000);
+    serverOptions.ListenAnyIP(5001);
+    
+});
 
 
 
@@ -37,9 +48,9 @@ builder.Services.AddSwaggerGen(c =>
 }
     );
 
-
-
 var app = builder.Build();
+
+
 
 if (app.Environment.IsDevelopment())
 {

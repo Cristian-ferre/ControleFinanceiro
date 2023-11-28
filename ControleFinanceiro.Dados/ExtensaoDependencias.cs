@@ -13,8 +13,8 @@ namespace ControleFinanceiro.Dados
             //configurando a injeção de dependência para associar a interface IRepositoryReceita à implementação concreta RepositoryReceita
 
             services.AddScoped<IRepositoryReceita, RepositoryReceita>();
+            services.AddScoped<IRepositoryDespesa,  RepositoryDespesa>();
             services.AddScoped<IRepositoryCategoria, RepositoryCategoria>();
-            //services.AddScoped<IRepositoryDespesa>, RepositoryDespesa();
 
             return services;
         }

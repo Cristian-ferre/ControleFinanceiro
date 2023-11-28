@@ -1,5 +1,6 @@
 ﻿using ControleFinanceiro.Dados.Repositories;
 using ControleFinanceiro.Dominio.DTOs;
+using ControleFinanceiro.Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFinanceiro.API.Controllers
@@ -7,9 +8,9 @@ namespace ControleFinanceiro.API.Controllers
     [Route("/ControleFinanceiro/Despesa/")]
     public class DespesaController : Controller
     {
-        private readonly RepositoryDespesa _repositoryDespesa;
+        private readonly IRepositoryDespesa _repositoryDespesa;
 
-        public DespesaController(RepositoryDespesa repositoryDespesa)
+        public DespesaController(IRepositoryDespesa repositoryDespesa)
         {
             _repositoryDespesa = repositoryDespesa;
         }
@@ -18,6 +19,7 @@ namespace ControleFinanceiro.API.Controllers
         public ActionResult Adicionar([FromBody] DespesaDTO despesa)
         {
             var result = _repositoryDespesa.Adicionar(despesa);
+
             return Ok(result);
         }
     }

@@ -1,5 +1,4 @@
 ﻿using ControleFinanceiro.Dominio.DTOs;
-using ControleFinanceiro.Dominio.Entities;
 
 namespace ControleFinanceiro.Dominio.Interfaces
 {
@@ -9,7 +8,7 @@ namespace ControleFinanceiro.Dominio.Interfaces
 
         object Atualizar (DespesaDTO despesa);
 
-        object Remover(Despesas despesasID);
+        object Remover(int despesasID);
 
         ICollection<DespesaDTO> ObterTodas();
 

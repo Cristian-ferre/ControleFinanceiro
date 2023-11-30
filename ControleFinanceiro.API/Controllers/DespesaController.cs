@@ -15,7 +15,7 @@ namespace ControleFinanceiro.API.Controllers
         }
 
         /// <summary>
-        /// Cadstro de nova Despesa
+        /// Cadastro de nova Despesa
         /// </summary>
         /// <param name="despesa"></param>
         /// <returns> Despesa recém-criada</returns>

@@ -19,13 +19,16 @@ namespace ControleFinanceiro.Dados.Repositories
         {
             try
             {
+
+                var despesasDataFim = despesa.DespesasData.AddMonths(despesa.DespesasQuantidadeMeses);
+
                 var newDespesa = new Despesas
                 {
                     DespesaName = despesa.DespesaName,
                     DespesaDescricao = despesa.DespesaDescricao,
                     DespesaValor = despesa.DespesaValor,
                     DespesasData = despesa.DespesasData,
-                    //DespesasQuantidadeMeses = despesa.DespesasQuantidadeMeses,
+                    DespesasDataFim = despesasDataFim,
                     StatusDespesas = despesa.StatusDespesas,
                     CategoriaId = despesa.CategoriaId,
                     UsuarioId = 1,
@@ -56,11 +59,13 @@ namespace ControleFinanceiro.Dados.Repositories
                     return new { success = false, message = "Despesa não encontrada" };
                 }
 
+                var despesasDataFim = despesa.DespesasData.AddMonths(despesa.DespesasQuantidadeMeses);
+
                 despesaExistente.DespesaName = despesa.DespesaName;
                 despesaExistente.DespesaDescricao = despesa.DespesaDescricao;
                 despesaExistente.DespesaValor = despesa.DespesaValor;
                 despesaExistente.DespesasData = despesa.DespesasData;
-                //despesaExistente.DespesasQuantidadeMeses = despesa.DespesasQuantidadeMeses;
+                despesaExistente.DespesasDataFim = despesasDataFim;
                 despesaExistente.StatusDespesas = despesa.StatusDespesas;
                 despesaExistente.CategoriaId = despesa.CategoriaId;
 

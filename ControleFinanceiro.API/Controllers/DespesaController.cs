@@ -18,7 +18,6 @@ namespace ControleFinanceiro.API.Controllers
         public ActionResult Adicionar([FromBody] DespesaDTO despesa)
         {
             var result = _repositoryDespesa.Adicionar(despesa);
-
             return Ok(result);
         }
 

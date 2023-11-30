@@ -8,7 +8,7 @@ namespace ControleFinanceiro.Dominio.Interfaces
 
         object Atualizar (DespesaDTO despesa);
 
-        object Remover(int despesasID);
+        object Remover(int despesaID);
 
         ICollection<DespesaDTO> ObterTodas();
 

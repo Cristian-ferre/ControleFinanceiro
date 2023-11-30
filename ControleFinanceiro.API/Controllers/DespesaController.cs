@@ -30,8 +30,17 @@ namespace ControleFinanceiro.API.Controllers
             return Ok(result);
         }
 
-        [HttpPut("Remover")]
-        public AcceptedResult Remover(int despesaID)
+
+        [HttpGet("ObterTodas")]
+        public ICollection<DespesaDTO> ObterTodas()
+        {
+            var t = _repositoryDespesa.ObterTodas();
+            return (ICollection<DespesaDTO>)Ok(t);
+        }
+
+
+        [HttpDelete("Remover")]
+        public ActionResult Remover(int despesaID)
         {
             var result = _repositoryDespesa.Remover(despesaID);
             return Ok(result);

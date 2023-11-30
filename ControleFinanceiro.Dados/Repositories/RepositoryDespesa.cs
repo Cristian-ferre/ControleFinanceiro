@@ -79,9 +79,26 @@ namespace ControleFinanceiro.Dados.Repositories
             throw new NotImplementedException();
         }
 
-        public object Remover(int despesasID)
+        public object Remover(int despesaID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var despesa = _context.Despesas.FirstOrDefault(d => d.DespesaId == despesaID);
+
+                if (despesa == null)
+                {
+                    return new { success = false, message = "Despesa não encontrada" };
+                }
+
+                _context.Despesas.Remove(despesa);
+                _context.SaveChanges();
+
+                return new { success = true, message = "Despesa removida com sucesso!!" };
+            }
+            catch (Exception ex)
+            {
+                return new { success = false, message = "ALgo deu errado!!", error = ex.Message };
+            }
         }
     }
 }

@@ -32,9 +32,9 @@ namespace ControleFinanceiro.API.Controllers
 
 
         [HttpGet("ObterTodas")]
-        public ICollection<DespesaDTO> ObterTodas()
+        public ICollection<DespesaDTO> ObterTodas(DateOnly data)
         {
-            var t = _repositoryDespesa.ObterTodas();
+            var t = _repositoryDespesa.ObterTodas(data);
             return (ICollection<DespesaDTO>)Ok(t);
         }
 

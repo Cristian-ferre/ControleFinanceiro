@@ -10,7 +10,7 @@ namespace ControleFinanceiro.Dominio.Interfaces
 
         object Remover(int despesaID);
 
-        ICollection<DespesaDTO> ObterTodas();
+        ICollection<DespesaDTO> ObterTodas(DateOnly data);
 
         //Filtros para Obter:
     }

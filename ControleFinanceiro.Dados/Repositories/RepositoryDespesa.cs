@@ -74,8 +74,15 @@ namespace ControleFinanceiro.Dados.Repositories
             }
         }
 
-        public ICollection<DespesaDTO> ObterTodas()
+        public ICollection<DespesaDTO> ObterTodas(DateOnly data)
         {
+
+            // Converte DateOnly em DateTime com horário definido como meia-noite   
+            DateTime dataEscolhida = data.ToDateTime(new TimeOnly(0, 0, 0, 0));
+
+
+            //var t = _context.Despesas.Where(d => d.DespesasData )
+
             throw new NotImplementedException();
         }
 

@@ -31,10 +31,21 @@ namespace ControleFinanceiro.API.Controllers
 
 
         [HttpGet("ObterTodas")]
-        public ICollection<DespesaDTO> ObterTodas(DateOnly data)
+        public ActionResult ObterTodas(DateOnly data)
         {
-            var t = _repositoryDespesa.ObterTodas(data);
-            return (ICollection<DespesaDTO>)Ok(t);
+
+            if (data == null)
+            {
+                return Json(new { success = false, message = "Data não informada!!" });
+            }
+
+            var listDespesas = _repositoryDespesa.ObterTodas(data);
+            if (listDespesas == null)
+            {
+                return Json(new { success = false, message = "nenhuma despesa encontrada" });
+            }
+
+            return Ok(listDespesas);
         }
 
 

@@ -79,16 +79,20 @@ namespace ControleFinanceiro.Dados.Repositories
             }
         }
 
-        public ICollection<DespesaDTO> ObterTodas(DateOnly data)
+        public IEnumerable<Despesas> ObterTodas(DateOnly data)
         {
 
             // Converte DateOnly em DateTime com horário definido como meia-noite   
             DateTime dataEscolhida = data.ToDateTime(new TimeOnly(0, 0, 0, 0));
 
+            return _context.Despesas
+                .Where(r =>
+                    (r.DespesasData.Year == dataEscolhida.Year &&
+                    r.DespesasData.Month == dataEscolhida.Month) ||
+                    (r.DespesasData <= dataEscolhida && (r.DespesasDataFim == null || r.DespesasDataFim >= dataEscolhida))
+                ).ToList();
 
-            //var t = _context.Despesas.Where(d => d.DespesasData )
 
-            throw new NotImplementedException();
         }
 
         public object Remover(int despesaID)

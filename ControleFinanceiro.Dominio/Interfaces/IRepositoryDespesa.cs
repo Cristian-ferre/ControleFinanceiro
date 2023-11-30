@@ -1,4 +1,5 @@
 ﻿using ControleFinanceiro.Dominio.DTOs;
+using ControleFinanceiro.Dominio.Entities;
 
 namespace ControleFinanceiro.Dominio.Interfaces
 {
@@ -10,7 +11,7 @@ namespace ControleFinanceiro.Dominio.Interfaces
 
         object Remover(int despesaID);
 
-        ICollection<DespesaDTO> ObterTodas(DateOnly data);
+        IEnumerable<Despesas> ObterTodas(DateOnly data);
 
         //Filtros para Obter:
     }

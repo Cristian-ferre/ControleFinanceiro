@@ -14,6 +14,12 @@ namespace ControleFinanceiro.API.Controllers
             _repositoryDespesa = repositoryDespesa;
         }
 
+        /// <summary>
+        /// Cadstro de nova Despesa
+        /// </summary>
+        /// <param name="despesa"></param>
+        /// <returns> Despesa recém-criada</returns>
+        /// <response code="201">Sucesso</response>
         [HttpPost("Adicionar")]
         public ActionResult Adicionar([FromBody] DespesaDTO despesa)
         {
@@ -21,7 +27,11 @@ namespace ControleFinanceiro.API.Controllers
             return Ok(result);
         }
 
-
+        /// <summary>
+        /// Editar Despesas
+        /// </summary>
+        /// <param name="despesa">Informe o ID e os campos para editar</param>
+        /// <returns>Despesa editada</returns>
         [HttpPut("Atualizar")]
         public ActionResult Atualizar([FromBody] DespesaDTO despesa)
         {
@@ -29,7 +39,10 @@ namespace ControleFinanceiro.API.Controllers
             return Ok(result);
         }
 
-
+        /// <summary>
+        /// Exibir todas as despesas Variaveis e Fixas com base no ano e mês
+        /// </summary>
+        /// <param name="data">Informe a Data atual</param>
         [HttpGet("ObterTodas")]
         public ActionResult ObterTodas(DateOnly data)
         {
@@ -48,7 +61,10 @@ namespace ControleFinanceiro.API.Controllers
             return Ok(listDespesas);
         }
 
-
+        /// <summary>
+        /// Excluir Despesa
+        /// </summary>
+        /// <param name="despesaID">Informe o ID da Recita</param>
         [HttpDelete("Remover")]
         public ActionResult Remover(int despesaID)
         {

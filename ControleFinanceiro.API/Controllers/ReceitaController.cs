@@ -10,6 +10,10 @@ namespace ControleFinanceiro.API.Controllers
     {
         private IRepositoryReceita _IReceita;
 
+        /// <summary>
+        /// rebenta o pai?
+        /// </summary>
+        /// <param name="IReceira"></param>
         public ReceitaController(IRepositoryReceita IReceira)
         {
             _IReceita = IReceira;
@@ -123,6 +127,7 @@ namespace ControleFinanceiro.API.Controllers
             }
         }
 
+
         /// <summary>
         /// Exibir todas as receitas Variaveis e Fixas com base no ano e mês
         /// </summary>
@@ -132,6 +137,9 @@ namespace ControleFinanceiro.API.Controllers
         {
             try
             {
+
+
+                dataParaExibir = dataParaExibir == DateOnly.FromDateTime(Convert.ToDateTime("01/01/0001 00:00:00")) ? DateOnly.FromDateTime(DateTime.Now) : dataParaExibir;
                 var receitasNoIntervalo = _IReceita.ObterTodas(dataParaExibir);
 
                 var receitaGetDTOs = receitasNoIntervalo.Select(receita => new ReceitaGetDTO

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ControleFinanceiro.Dados.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class V1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,25 +47,24 @@ namespace ControleFinanceiro.Dados.Migrations
                     DespesaName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DespesaDescricao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     DespesaValor = table.Column<double>(type: "float", nullable: false),
-                    DataInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DespesasData = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DespesasQuantidadeMeses = table.Column<int>(type: "int", nullable: false),
                     StatusDespesas = table.Column<int>(type: "int", nullable: false),
-                    UsuariosId = table.Column<int>(type: "int", nullable: false),
-                    CategoriaId = table.Column<int>(type: "int", nullable: false),
-                    CategoriasCategoriaId = table.Column<int>(type: "int", nullable: false)
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    CategoriaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Despesas", x => x.DespesaId);
                     table.ForeignKey(
-                        name: "FK_Despesas_Categorias_CategoriasCategoriaId",
-                        column: x => x.CategoriasCategoriaId,
+                        name: "FK_Despesas_Categorias_CategoriaId",
+                        column: x => x.CategoriaId,
                         principalTable: "Categorias",
                         principalColumn: "CategoriaId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Despesas_Usuarios_UsuariosId",
-                        column: x => x.UsuariosId,
+                        name: "FK_Despesas_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "Usuarios",
                         principalColumn: "UsuarioId",
                         onDelete: ReferentialAction.Cascade);
@@ -80,37 +79,36 @@ namespace ControleFinanceiro.Dados.Migrations
                     ReceitaName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ReceitaDescricao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ReceitaValor = table.Column<double>(type: "float", nullable: false),
-                    DataInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReceitaData = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReceitaDataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TipoValor = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    UsuariosUsuarioId = table.Column<int>(type: "int", nullable: false)
+                    UsuarioId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Receitas", x => x.ReceitaId);
                     table.ForeignKey(
-                        name: "FK_Receitas_Usuarios_UsuariosUsuarioId",
-                        column: x => x.UsuariosUsuarioId,
+                        name: "FK_Receitas_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "Usuarios",
                         principalColumn: "UsuarioId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Despesas_CategoriasCategoriaId",
+                name: "IX_Despesas_CategoriaId",
                 table: "Despesas",
-                column: "CategoriasCategoriaId");
+                column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Despesas_UsuariosId",
+                name: "IX_Despesas_UsuarioId",
                 table: "Despesas",
-                column: "UsuariosId");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Receitas_UsuariosUsuarioId",
+                name: "IX_Receitas_UsuarioId",
                 table: "Receitas",
-                column: "UsuariosUsuarioId");
+                column: "UsuarioId");
         }
 
         /// <inheritdoc />

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleFinanceiro.Dados.Migrations
 {
     [DbContext(typeof(ControleFinanceiroDbContext))]
-    [Migration("20231122194636_V1")]
-    partial class V1
+    [Migration("20231102201707_alterandoReceitasQuantidadesMesesParaReceitaDataFim")]
+    partial class alterandoReceitasQuantidadesMesesParaReceitaDataFim
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

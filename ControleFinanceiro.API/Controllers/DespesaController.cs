@@ -42,7 +42,7 @@ namespace ControleFinanceiro.API.Controllers
         /// <summary>
         /// Exibir todas as despesas Variaveis e Fixas com base no ano e mês
         /// </summary>
-        /// <param name="data">Informe a Data atual</param>
+        /// <param name="data">Informe a Data atual, formato americano - month/day/year </param>
         [HttpGet("ObterTodas")]
         public ActionResult ObterTodas(DateOnly data)
         {

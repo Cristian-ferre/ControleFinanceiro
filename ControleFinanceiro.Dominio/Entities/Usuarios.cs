@@ -17,6 +17,8 @@ namespace ControleFinanceiro.Dominio.Entities
         [Required]
         public string Name { get; set; }
 
+        public string Senha { get; set; }
+
 
         // Relacionamentos e FKs:
 

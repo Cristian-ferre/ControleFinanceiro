@@ -64,7 +64,7 @@ namespace ControleFinanceiro.API.Controllers
         /// <summary>
         /// Excluir Despesa
         /// </summary>
-        /// <param name="despesaID">Informe o ID da Recita</param>
+        /// <param name="despesaID">Informe o ID da Despesa</param>
         [HttpDelete("Remover")]
         public ActionResult Remover(int despesaID)
         {

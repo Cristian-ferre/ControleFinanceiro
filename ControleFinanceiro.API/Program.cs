@@ -2,8 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using ControleFinanceiro.Dados.Context;
 using Microsoft.OpenApi.Models;
 using ControleFinanceiro.Dados;
-using Microsoft.AspNetCore.Hosting;
-using System.Net;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using ControleFinanceiro.API;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +22,7 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
     // Configurações do Kestrel vão aqui
     serverOptions.ListenAnyIP(5000);
     serverOptions.ListenAnyIP(5001);
-    
+
 });
 
 
@@ -45,8 +47,61 @@ builder.Services.AddSwaggerGen(c =>
     var xmlFile = "ControleFinanceiro.API.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
-}
-    );
+
+
+    // interface para o token
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+    {
+        new OpenApiSecurityScheme
+        {
+        Reference = new OpenApiReference
+            {
+            Type = ReferenceType.SecurityScheme,
+            Id = "Bearer"
+            },
+            Scheme = "oauth2",
+            Name = "Bearer",
+            In = ParameterLocation.Header,
+
+        },
+        new List<string>()
+        }
+    });
+});
+
+
+
+// validação do token:
+
+var key = Encoding.ASCII.GetBytes(ControleFinanceiro.API.Key.Secret);
+
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
+
 
 var app = builder.Build();
 

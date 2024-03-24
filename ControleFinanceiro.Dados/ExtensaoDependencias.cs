@@ -15,6 +15,7 @@ namespace ControleFinanceiro.Dados
             services.AddScoped<IRepositoryReceita, RepositoryReceita>();
             services.AddScoped<IRepositoryDespesa,  RepositoryDespesa>();
             services.AddScoped<IRepositoryCategoria, RepositoryCategoria>();
+            services.AddScoped<IRepositoryUsuario, RepositoryUsuario>();
 
             return services;
         }

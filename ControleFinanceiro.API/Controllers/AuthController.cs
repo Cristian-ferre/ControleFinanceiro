@@ -1,5 +1,7 @@
 ﻿using ControleFinanceiro.API.Services;
 using ControleFinanceiro.Dados.Context;
+using ControleFinanceiro.Dominio.Entities;
+using ControleFinanceiro.Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFinanceiro.API.Controllers
@@ -8,31 +10,35 @@ namespace ControleFinanceiro.API.Controllers
     [Route("ControleFinanceiro/auth")]
     public class AuthController : Controller
     {
+        private readonly IRepositoryUsuario _repositoryUsuario;
         private readonly IConfiguration _configuration;
-        private readonly ControleFinanceiroDbContext _context;
 
-        public AuthController(IConfiguration configuration, ControleFinanceiroDbContext context)
+
+        public AuthController(IRepositoryUsuario repositoryUsuario, IConfiguration configuration)
         {
+            _repositoryUsuario = repositoryUsuario;
             _configuration = configuration;
-            _context = context;
         }
 
         [HttpPost]
-        public IActionResult Auth(string name, string senha)
+        public async Task<IActionResult> Auth(string name, string senha)
         {
+            bool usuarioExiste = await _repositoryUsuario.UsuarioExiste(name, senha);
 
-            
-
-
-            if (name == "cristian" && senha == "123456")
+            if (usuarioExiste)
             {
+                Usuarios usuario = await _repositoryUsuario.ObterUsuario(name, senha);
+
                 string jwtKey = _configuration["JwtSettings:Key"];
 
-                var token = TokenService.GenerateToken(new ControleFinanceiro.Dominio.Entities.Usuarios(), jwtKey);
+                var token = TokenService.GenerateToken(usuario, jwtKey);
                 return Ok(token);
             }
-
-            return BadRequest("Nome ou senha invalido");
+            else
+            {
+                return NotFound("Usuario Não existe");
+            }
         }
+
     }
 }

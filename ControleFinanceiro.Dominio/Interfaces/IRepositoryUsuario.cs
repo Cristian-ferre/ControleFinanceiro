@@ -6,6 +6,6 @@ namespace ControleFinanceiro.Dominio.Interfaces
     {
         Task<bool> UsuarioExiste(string name, string senha); 
 
-        Task<Usuarios> ObterUsuario(int usuarioID);
+        Task<Usuarios> ObterUsuario(string name, string senha);
     }
 }

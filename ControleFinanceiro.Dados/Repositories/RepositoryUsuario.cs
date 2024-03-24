@@ -17,14 +17,14 @@ namespace ControleFinanceiro.Dados.Repositories
             _context = context;
         }
 
-        public async Task<Usuarios> ObterUsuario(int usuarioID)
+        public async Task<Usuarios> ObterUsuario(string name, string senha)
         {
-            return await _context.Usuarios.FirstOrDefaultAsync(u => u.UsuarioId == usuarioID);
+            return await _context.Usuarios.FirstOrDefaultAsync(u => u.Name == name && u.Senha == senha);
         }
 
         public async Task<bool> UsuarioExiste(string name, string senha)
         {
-            return await  _context.Usuarios.AnyAsync(u => u.Name == name || u.Senha == senha);
+            return await  _context.Usuarios.AnyAsync(u => u.Name == name && u.Senha == senha);
         }
     }
 }

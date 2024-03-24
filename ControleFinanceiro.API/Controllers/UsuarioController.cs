@@ -1,5 +1,5 @@
 ﻿using ControleFinanceiro.API.Services;
-using ControleFinanceiro.Dados.Context;
+using ControleFinanceiro.Dominio.DTOs;
 using ControleFinanceiro.Dominio.Entities;
 using ControleFinanceiro.Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -7,20 +7,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace ControleFinanceiro.API.Controllers
 {
     [ApiController]
-    [Route("ControleFinanceiro/auth")]
-    public class AuthController : Controller
+    [Route("ControleFinanceiro/Usuario/")]
+    public class UsuarioController : Controller
     {
         private readonly IRepositoryUsuario _repositoryUsuario;
         private readonly IConfiguration _configuration;
 
 
-        public AuthController(IRepositoryUsuario repositoryUsuario, IConfiguration configuration)
+        public UsuarioController(IRepositoryUsuario repositoryUsuario, IConfiguration configuration)
         {
             _repositoryUsuario = repositoryUsuario;
             _configuration = configuration;
         }
 
-        [HttpPost]
+        [HttpPost("Auth")]
         public async Task<IActionResult> Auth(string name, string senha)
         {
             bool usuarioExiste = await _repositoryUsuario.UsuarioExiste(name, senha);
@@ -38,6 +38,24 @@ namespace ControleFinanceiro.API.Controllers
             {
                 return NotFound("Usuario Não existe");
             }
+        }
+
+
+        [HttpPost("Cadastrar")]
+        public async  Task<IActionResult> Cadastrar(UsuarioDTO usuario)
+        {
+            bool usuarioExiste = await _repositoryUsuario.UsuarioExiste(usuario.Name, usuario.Senha);
+
+            if(usuarioExiste)
+            {
+                return NotFound("Usuario Já existente");
+            }
+            else
+            {
+                UsuarioDTO novoUsuario = await _repositoryUsuario.Adicionar(usuario);
+                return Ok(novoUsuario);
+            }
+
         }
 
     }

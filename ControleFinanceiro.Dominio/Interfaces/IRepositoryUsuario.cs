@@ -1,4 +1,5 @@
-﻿using ControleFinanceiro.Dominio.Entities;
+﻿using ControleFinanceiro.Dominio.DTOs;
+using ControleFinanceiro.Dominio.Entities;
 
 namespace ControleFinanceiro.Dominio.Interfaces
 {
@@ -7,5 +8,8 @@ namespace ControleFinanceiro.Dominio.Interfaces
         Task<bool> UsuarioExiste(string name, string senha); 
 
         Task<Usuarios> ObterUsuario(string name, string senha);
+
+        Task<UsuarioDTO> Adicionar (UsuarioDTO usuario);
+ 
     }
 }

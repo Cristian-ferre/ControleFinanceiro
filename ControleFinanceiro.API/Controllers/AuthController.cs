@@ -1,4 +1,5 @@
 ﻿using ControleFinanceiro.API.Services;
+using ControleFinanceiro.Dados.Context;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFinanceiro.API.Controllers
@@ -8,15 +9,21 @@ namespace ControleFinanceiro.API.Controllers
     public class AuthController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly ControleFinanceiroDbContext _context;
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, ControleFinanceiroDbContext context)
         {
             _configuration = configuration;
+            _context = context;
         }
 
         [HttpPost]
         public IActionResult Auth(string name, string senha)
         {
+
+            
+
+
             if (name == "cristian" && senha == "123456")
             {
                 string jwtKey = _configuration["JwtSettings:Key"];

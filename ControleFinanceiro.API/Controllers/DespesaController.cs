@@ -1,5 +1,6 @@
 ﻿using ControleFinanceiro.Dominio.DTOs;
 using ControleFinanceiro.Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFinanceiro.API.Controllers
@@ -20,6 +21,7 @@ namespace ControleFinanceiro.API.Controllers
         /// <param name="despesa"></param>
         /// <returns> Despesa recém-criada</returns>
         /// <response code="201">Sucesso</response>
+        [Authorize]
         [HttpPost("Adicionar")]
         public ActionResult Adicionar([FromBody] DespesaDTO despesa)
         {
@@ -32,6 +34,7 @@ namespace ControleFinanceiro.API.Controllers
         /// </summary>
         /// <param name="despesa">Informe o ID e os campos para editar</param>
         /// <returns>Despesa editada</returns>
+        [Authorize]
         [HttpPut("Atualizar")]
         public ActionResult Atualizar([FromBody] DespesaDTO despesa)
         {
@@ -43,6 +46,7 @@ namespace ControleFinanceiro.API.Controllers
         /// Exibir todas as despesas Variaveis e Fixas com base no ano e mês
         /// </summary>
         /// <param name="data">Informe a Data atual, formato americano - month/day/year </param>
+        [Authorize]
         [HttpGet("ObterTodas")]
         public ActionResult ObterTodas(DateOnly data)
         {
@@ -65,6 +69,7 @@ namespace ControleFinanceiro.API.Controllers
         /// Excluir Despesa
         /// </summary>
         /// <param name="despesaID">Informe o ID da Despesa</param>
+        [Authorize]
         [HttpDelete("Remover")]
         public ActionResult Remover(int despesaID)
         {

@@ -3,6 +3,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Configuration;
+
 
 namespace ControleFinanceiro.API.Services
 {
@@ -10,10 +12,11 @@ namespace ControleFinanceiro.API.Services
     public class TokenService
     {
 
-        public static object GenerateToken(Usuarios usuario)
+        public static object GenerateToken(Usuarios usuario, string jwtKey)
         {
+
             // pegando minha chave
-            var key = Encoding.ASCII.GetBytes(Key.Secret);
+            var key = Encoding.ASCII.GetBytes(jwtKey);
             var tokenConfig = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using ControleFinanceiro.API;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,6 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
     serverOptions.ListenAnyIP(5001);
 
 });
-
 
 
 builder.Services.AddControllers();
@@ -78,11 +78,18 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Configuração do arquivo appsettings.json
+IConfigurationRoot configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .Build();
 
+// Obter a chave JWT do arquivo de configuração
+string jwtKey = configuration["JwtSettings:Key"];
+
+// Converter a chave JWT de string para array de bytes usando ASCII
+byte[] key = Encoding.ASCII.GetBytes(jwtKey);
 
 // validação do token:
-
-var key = Encoding.ASCII.GetBytes(ControleFinanceiro.API.Key.Secret);
 
 builder.Services.AddAuthentication(x =>
 {

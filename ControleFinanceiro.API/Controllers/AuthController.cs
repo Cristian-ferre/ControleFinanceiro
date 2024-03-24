@@ -4,19 +4,28 @@ using Microsoft.AspNetCore.Mvc;
 namespace ControleFinanceiro.API.Controllers
 {
     [ApiController]
-    [Route("api/v1/auth")]
+    [Route("ControleFinanceiro/auth")]
     public class AuthController : Controller
     {
-        [HttpPost]
-        public IActionResult Auth(string username, string password)
+        private readonly IConfiguration _configuration;
+
+        public AuthController(IConfiguration configuration)
         {
-            if (username == "filipe" && password == "123456")
+            _configuration = configuration;
+        }
+
+        [HttpPost]
+        public IActionResult Auth(string name, string senha)
+        {
+            if (name == "cristian" && senha == "123456")
             {
-                var token = TokenService.GenerateToken(new ControleFinanceiro.Dominio.Entities.Usuarios());
+                string jwtKey = _configuration["JwtSettings:Key"];
+
+                var token = TokenService.GenerateToken(new ControleFinanceiro.Dominio.Entities.Usuarios(), jwtKey);
                 return Ok(token);
             }
 
-            return BadRequest("username or password invalid");
+            return BadRequest("Nome ou senha invalido");
         }
     }
 }

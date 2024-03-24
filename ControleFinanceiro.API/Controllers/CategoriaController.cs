@@ -3,6 +3,7 @@ using ControleFinanceiro.Dados.Repositories;
 using ControleFinanceiro.Dominio.DTOs;
 using ControleFinanceiro.Dominio.Entities;
 using ControleFinanceiro.Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFinanceiro.API.Controllers
@@ -19,6 +20,7 @@ namespace ControleFinanceiro.API.Controllers
         }
 
         [HttpPost("Adicionar")]
+        [Authorize]
         public ActionResult Adicionar([FromBody] CategoriaDTO categorias)
         {
             var result = _repositoryCategoria.Adicionar(categorias);
@@ -26,6 +28,7 @@ namespace ControleFinanceiro.API.Controllers
         }
 
         [HttpGet("ObterTodas")]
+        [Authorize]
         public ActionResult ObterTodas()
         {
             var result = _repositoryCategoria.ObterTodas();

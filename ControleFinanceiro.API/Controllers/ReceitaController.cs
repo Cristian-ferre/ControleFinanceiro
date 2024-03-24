@@ -1,6 +1,7 @@
 ﻿using ControleFinanceiro.Dominio.DTOs;
 using ControleFinanceiro.Dominio.Entities;
 using ControleFinanceiro.Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFinanceiro.API.Controllers
@@ -22,6 +23,7 @@ namespace ControleFinanceiro.API.Controllers
         /// <returns> receita Recém-criada</returns>
         /// <response code="201">Sucesso</response>
         [HttpPost("Adicionar")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult Adicionar([FromBody] ReceitaDTO receitas)
         {
@@ -60,6 +62,7 @@ namespace ControleFinanceiro.API.Controllers
         /// <param>Informar o ID da Receita</param>
         /// <returns> receita Editada</returns>
         [HttpPut("Atualizar")]
+        [Authorize]
         public ActionResult Atualizar(int receitaId, [FromBody] ReceitaDTO receitaAtualizada)
         {
             var receiraExistente = _IReceita.ObterPorId(receitaId);
@@ -101,6 +104,7 @@ namespace ControleFinanceiro.API.Controllers
         /// </summary>
         /// <param name="receitaId"> Informe o ID da Recita</param>
         [HttpDelete("Remover")]
+        [Authorize]
         public ActionResult Remover(int receitaId)
         {
             var receita = _IReceita.ObterPorId(receitaId);
@@ -128,6 +132,7 @@ namespace ControleFinanceiro.API.Controllers
         /// </summary>
         /// <param >Informe a Data atual </param>
         [HttpGet("ObterTodas")]
+        [Authorize]
         public ActionResult ObterTodas(DateOnly dataParaExibir)
         {
             try

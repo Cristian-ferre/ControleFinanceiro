@@ -13,7 +13,6 @@ namespace ControleFinanceiro.API.Controllers
         private readonly IRepositoryUsuario _repositoryUsuario;
         private readonly IConfiguration _configuration;
 
-
         public UsuarioController(IRepositoryUsuario repositoryUsuario, IConfiguration configuration)
         {
             _repositoryUsuario = repositoryUsuario;
@@ -23,37 +22,46 @@ namespace ControleFinanceiro.API.Controllers
         [HttpPost("Auth")]
         public async Task<IActionResult> Auth(string email, string senha)
         {
-            bool usuarioExiste = await _repositoryUsuario.UsuarioExiste(email, senha);
+            bool usuarioExiste = await _repositoryUsuario.UsuarioExiste(email);
 
             if (usuarioExiste)
             {
-                Usuarios usuario = await _repositoryUsuario.ObterUsuario(email, senha);
+                Usuarios usuario = await _repositoryUsuario.ObterUsuario(email);
 
-                string jwtKey = _configuration["JwtSettings:Key"];
+                if (SegurancaServico.VerificandoSenha(senha, usuario.Senha))
+                {
+                    // Autenticação bem-sucedida, pode gerar o token JWT
+                    string jwtKey = _configuration["JwtSettings:Key"];
+                    var token = TokenService.GenerateToken(usuario, jwtKey);
 
-                var token = TokenService.GenerateToken(usuario, jwtKey);
-                return Ok(token);
+                    return Ok(new { Token = token });
+                }
+                else
+                {
+                    return Unauthorized("Senha incorreta");
+                }
             }
             else
             {
-                return NotFound("Usuario Não existe");
+                return NotFound("Usuário não encontrado");
             }
         }
 
 
         [HttpPost("Cadastrar")]
-        public async  Task<IActionResult> Cadastrar(UsuarioDTO usuario)
+        public async Task<IActionResult> Cadastrar(UsuarioDTO usuario)
         {
+            bool usuarioExiste = await _repositoryUsuario.UsuarioExiste(usuario.Email);
 
-            bool usuarioExiste = await _repositoryUsuario.UsuarioExiste(usuario.Email, usuario.Senha);
-
-            if(usuarioExiste)
+            if (usuarioExiste)
             {
-                return NotFound("Usuario Já existente");
+                return NotFound("Email Já Cadastrado");
+
             }
             else
             {
                 usuario.Senha = SegurancaServico.HashSenha(usuario.Senha);
+
                 UsuarioDTO novoUsuario = await _repositoryUsuario.Adicionar(usuario);
                 return Ok(novoUsuario);
             }

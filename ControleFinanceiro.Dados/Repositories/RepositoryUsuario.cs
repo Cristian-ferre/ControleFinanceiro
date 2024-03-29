@@ -47,14 +47,23 @@ namespace ControleFinanceiro.Dados.Repositories
             return usuarioAdicionadoDTO;
         }
 
-        public async Task<Usuarios> ObterUsuario(string email, string senha)
+        public async Task<Usuarios> ObterUsuario(string email)
         {
-            return await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email && u.Senha == senha);
+           var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
+
+            //UsuarioDTO usuarioAdicionadoDTO = new UsuarioDTO
+            //{
+            //    Senha = usuario.Senha,
+            //    Email = usuario.Email,
+            //    Nome = usuario.Nome,
+            //};
+            return  usuario;
+
         }
 
-        public async Task<bool> UsuarioExiste(string email, string senha)
+        public async Task<bool> UsuarioExiste(string email)
         {
-            return await  _context.Usuarios.AnyAsync(u => u.Email == email && u.Senha == senha);
+            return await _context.Usuarios.AnyAsync(u => u.Email == email);
         }
     }
 }

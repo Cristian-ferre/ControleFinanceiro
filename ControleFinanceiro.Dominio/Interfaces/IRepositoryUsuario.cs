@@ -5,9 +5,9 @@ namespace ControleFinanceiro.Dominio.Interfaces
 {
     public interface IRepositoryUsuario
     {
-        Task<bool> UsuarioExiste(string name, string senha); 
+        Task<bool> UsuarioExiste(string senha, string Email); 
 
-        Task<Usuarios> ObterUsuario(string name, string senha);
+        Task<Usuarios> ObterUsuario(string Email, string senha);
 
         Task<UsuarioDTO> Adicionar (UsuarioDTO usuario);
  

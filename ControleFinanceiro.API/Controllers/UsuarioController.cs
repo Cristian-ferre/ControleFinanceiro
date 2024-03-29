@@ -21,13 +21,13 @@ namespace ControleFinanceiro.API.Controllers
         }
 
         [HttpPost("Auth")]
-        public async Task<IActionResult> Auth(string name, string senha)
+        public async Task<IActionResult> Auth(string email, string senha)
         {
-            bool usuarioExiste = await _repositoryUsuario.UsuarioExiste(name, senha);
+            bool usuarioExiste = await _repositoryUsuario.UsuarioExiste(email, senha);
 
             if (usuarioExiste)
             {
-                Usuarios usuario = await _repositoryUsuario.ObterUsuario(name, senha);
+                Usuarios usuario = await _repositoryUsuario.ObterUsuario(email, senha);
 
                 string jwtKey = _configuration["JwtSettings:Key"];
 
@@ -44,7 +44,7 @@ namespace ControleFinanceiro.API.Controllers
         [HttpPost("Cadastrar")]
         public async  Task<IActionResult> Cadastrar(UsuarioDTO usuario)
         {
-            bool usuarioExiste = await _repositoryUsuario.UsuarioExiste(usuario.Name, usuario.Senha);
+            bool usuarioExiste = await _repositoryUsuario.UsuarioExiste(usuario.Email, usuario.Senha);
 
             if(usuarioExiste)
             {

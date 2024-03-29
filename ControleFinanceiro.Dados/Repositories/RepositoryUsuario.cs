@@ -23,8 +23,9 @@ namespace ControleFinanceiro.Dados.Repositories
 
             Usuarios novoUsuario = new Usuarios
             {
-                Name = usuario.Name,
-                Senha   = usuario.Senha
+                Nome = usuario.Nome,
+                Senha   = usuario.Senha,
+                Email = usuario.Email,
             };
 
             _context.Usuarios.Add(novoUsuario);
@@ -33,21 +34,22 @@ namespace ControleFinanceiro.Dados.Repositories
             // Mapeamento de Usuarios para UsuarioDTO
             UsuarioDTO usuarioAdicionadoDTO = new UsuarioDTO
             {
-                Name = novoUsuario.Name,
-                Senha = novoUsuario.Senha
+                Nome = novoUsuario.Nome,
+                Senha = novoUsuario.Senha,
+                Email = novoUsuario.Email
             };
 
             return usuarioAdicionadoDTO;
         }
 
-        public async Task<Usuarios> ObterUsuario(string name, string senha)
+        public async Task<Usuarios> ObterUsuario(string email, string senha)
         {
-            return await _context.Usuarios.FirstOrDefaultAsync(u => u.Name == name && u.Senha == senha);
+            return await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email && u.Senha == senha);
         }
 
-        public async Task<bool> UsuarioExiste(string name, string senha)
+        public async Task<bool> UsuarioExiste(string email, string senha)
         {
-            return await  _context.Usuarios.AnyAsync(u => u.Name == name && u.Senha == senha);
+            return await  _context.Usuarios.AnyAsync(u => u.Email == email && u.Senha == senha);
         }
     }
 }

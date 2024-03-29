@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-
+using ControleFinanceiro.Dominio.DTOs;
 
 namespace ControleFinanceiro.API.Services
 {

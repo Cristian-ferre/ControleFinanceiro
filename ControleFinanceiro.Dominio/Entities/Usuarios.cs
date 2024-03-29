@@ -9,10 +9,16 @@ namespace ControleFinanceiro.Dominio.Entities
 {
     public  class Usuarios
     {
-        [Key]
-        public int UsuarioId { get; set; }
+        public Usuarios()
+        {
+            UsuarioId = Guid.NewGuid();
+        }
 
-        // atributos:
+        [Key]
+        public Guid UsuarioId { get; set; }
+
+        // atributos
+
 
         [Required]
         [StringLength(100)]

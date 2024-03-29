@@ -6,6 +6,7 @@ namespace ControleFinanceiro.Dominio.DTOs
     {
         public int DespesaId { get; set; }
         public string DespesaName { get; set; }
+        public Guid UsuarioId { get; set; }
         public string DespesaDescricao { get; set; }
         public double DespesaValor { get; set; }
         public DateTime DespesasData { get; set; }

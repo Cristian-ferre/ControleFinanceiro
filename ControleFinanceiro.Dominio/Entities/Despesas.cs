@@ -35,7 +35,7 @@ namespace ControleFinanceiro.Dominio.Entities
         // Relacionamentos
         [Required]
         [ForeignKey("Usuarios")]
-        public int UsuarioId { get; set; }
+        public Guid UsuarioId { get; set; }
         public Usuarios Usuarios { get; set; }
 
         [Required]

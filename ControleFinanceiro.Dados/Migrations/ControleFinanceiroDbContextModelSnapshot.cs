@@ -78,8 +78,8 @@ namespace ControleFinanceiro.Dados.Migrations
                     b.Property<int>("StatusDespesas")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("DespesaId");
 
@@ -120,8 +120,8 @@ namespace ControleFinanceiro.Dados.Migrations
                     b.Property<int>("TipoValor")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ReceitaId");
 
@@ -132,11 +132,9 @@ namespace ControleFinanceiro.Dados.Migrations
 
             modelBuilder.Entity("ControleFinanceiro.Dominio.Entities.Usuarios", b =>
                 {
-                    b.Property<int>("UsuarioId")
+                    b.Property<Guid>("UsuarioId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsuarioId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");

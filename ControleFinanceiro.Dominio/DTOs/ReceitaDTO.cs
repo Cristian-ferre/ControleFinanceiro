@@ -18,6 +18,6 @@ namespace ControleFinanceiro.Dominio.DTOs
 
         public TipoValor TipoValor { get; set; }
 
-        public int UsuarioId { get; set; }
+        public Guid UsuarioId { get; set; }
     }
 }

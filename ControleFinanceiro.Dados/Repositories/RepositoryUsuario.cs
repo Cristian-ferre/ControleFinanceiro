@@ -5,6 +5,9 @@ using ControleFinanceiro.Dominio.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
+
+
+
 namespace ControleFinanceiro.Dados.Repositories
 {
     public class RepositoryUsuario : IRepositoryUsuario
@@ -21,11 +24,13 @@ namespace ControleFinanceiro.Dados.Repositories
         public async Task<UsuarioDTO> Adicionar(UsuarioDTO usuario)
         {
 
+
             Usuarios novoUsuario = new Usuarios
             {
                 Nome = usuario.Nome,
                 Senha   = usuario.Senha,
                 Email = usuario.Email,
+                Ativo = true
             };
 
             _context.Usuarios.Add(novoUsuario);
@@ -36,7 +41,7 @@ namespace ControleFinanceiro.Dados.Repositories
             {
                 Nome = novoUsuario.Nome,
                 Senha = novoUsuario.Senha,
-                Email = novoUsuario.Email
+                Email = novoUsuario.Email,              
             };
 
             return usuarioAdicionadoDTO;

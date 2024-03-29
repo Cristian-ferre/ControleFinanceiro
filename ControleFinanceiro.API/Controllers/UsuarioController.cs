@@ -44,6 +44,7 @@ namespace ControleFinanceiro.API.Controllers
         [HttpPost("Cadastrar")]
         public async  Task<IActionResult> Cadastrar(UsuarioDTO usuario)
         {
+
             bool usuarioExiste = await _repositoryUsuario.UsuarioExiste(usuario.Email, usuario.Senha);
 
             if(usuarioExiste)
@@ -52,6 +53,7 @@ namespace ControleFinanceiro.API.Controllers
             }
             else
             {
+                usuario.Senha = SegurancaServico.HashSenha(usuario.Senha);
                 UsuarioDTO novoUsuario = await _repositoryUsuario.Adicionar(usuario);
                 return Ok(novoUsuario);
             }

@@ -15,16 +15,26 @@ namespace ControleFinanceiro.Dominio.Entities
         // atributos:
 
         [Required]
-        public string Name { get; set; }
+        [StringLength(100)]
+        public required string Nome { get; set; }
 
-        public string Senha { get; set; }
+        [Required]
+        [StringLength(100)]
+        public required string Senha { get; set; }
 
+        [Required]
+        [StringLength(320)]
+        public required string Email { get; set; }
+
+        public string? Foto { get; set; }
+
+        public bool Ativo { get; set; }
 
         // Relacionamentos e FKs:
 
-        public ICollection<Despesas> Despesas { get; set; }
+        public ICollection<Despesas>? Despesas { get; set; }
 
-        public ICollection<Receitas> Receitas { get; set; } 
+        public ICollection<Receitas>? Receitas { get; set; } 
 
     }
 }

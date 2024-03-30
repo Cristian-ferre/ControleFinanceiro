@@ -23,14 +23,21 @@ namespace ControleFinanceiro.API.Controllers
         /// <returns> receita Recém-criada</returns>
         /// <response code="201">Sucesso</response>
         [HttpPost("Adicionar")]
-        [Authorize]
+        //[Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult Adicionar([FromBody] ReceitaDTO receitas)
         {
-
-            //Somando a data atual com a quantidade de meses que uma receita ficara ativa
-            //DateTime dataAtual = DateTime.Now;
-            DateTime receitaDataFim = receitas.ReceitaData.AddMonths(receitas.ReceitaQuantidadeMeses);
+            DateTime? receitaDataFim;
+            if (receitas.ReceitaQuantidadeMeses != 0)
+            {
+                //Somando a data atual com a quantidade de meses que uma receita ficara ativa
+                //DateTime dataAtual = DateTime.Now;
+                receitaDataFim = receitas.ReceitaData.AddMonths(receitas.ReceitaQuantidadeMeses);
+            }
+            else
+            {
+                receitaDataFim = null;
+            }
 
             try
             {
@@ -45,7 +52,6 @@ namespace ControleFinanceiro.API.Controllers
                     UsuarioId = receitas.UsuarioId,
                 };
 
-
                 _IReceita.Adicionar(Receitas);
 
                 return Json(new { success = true, message = $"{Receitas.ReceitaName} Inserido com sucesso" });
@@ -54,7 +60,7 @@ namespace ControleFinanceiro.API.Controllers
             {
                 return StatusCode(500, new { success = false, message = "Ocorreu um erro interno no servidor" });
             }
-        }
+        }       
 
         /// <summary>
         /// Editar Receitas. 
@@ -65,10 +71,16 @@ namespace ControleFinanceiro.API.Controllers
         [Authorize]
         public ActionResult Atualizar(int receitaId, [FromBody] ReceitaDTO receitaAtualizada)
         {
-            var receiraExistente = _IReceita.ObterPorId(receitaId);
-
-            //Somando a data atual com a quantidade de meses que uma receita ficara ativa
-            DateTime receitaDataFim = receitaAtualizada.ReceitaData.AddMonths(receitaAtualizada.ReceitaQuantidadeMeses);
+            DateTime? receitaDataFim;
+            if (receitaAtualizada.ReceitaQuantidadeMeses != 0)
+            {
+                //Somando a data atual com a quantidade de meses que uma receita ficara ativa
+                receitaDataFim = receitaAtualizada.ReceitaData.AddMonths(receitaAtualizada.ReceitaQuantidadeMeses);
+            }
+            else
+            {
+                receitaDataFim = null;
+            }
 
             try
             {
@@ -85,7 +97,6 @@ namespace ControleFinanceiro.API.Controllers
                 _IReceita.Atualizar(receita);
 
                 return Ok(new { success = true, message = $"Receita editada com sucesso!!" });
-
             }
             catch (Exception ex)
             {
@@ -132,7 +143,7 @@ namespace ControleFinanceiro.API.Controllers
         /// </summary>
         /// <param >Informe a Data atual </param>
         [HttpGet("ObterTodas")]
-        [Authorize]
+        //[Authorize]
         public ActionResult ObterTodas(DateOnly dataParaExibir)
         {
             try

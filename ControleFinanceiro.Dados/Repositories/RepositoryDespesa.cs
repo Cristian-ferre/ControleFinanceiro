@@ -20,7 +20,17 @@ namespace ControleFinanceiro.Dados.Repositories
             try
             {
 
-                var despesasDataFim = despesa.DespesasData.AddMonths(despesa.DespesasQuantidadeMeses);
+                //var despesasDataFim = despesa.DespesasData.AddMonths(despesa.DespesasQuantidadeMeses);
+                DateTime? despesasDataFim = null ;
+                if (despesa.DespesasQuantidadeMeses != 0)
+                {
+                  
+                     despesasDataFim = despesa.DespesasData.AddMonths(despesa.DespesasQuantidadeMeses);
+                }
+                
+
+
+
 
                 var newDespesa = new Despesas
                 {

@@ -21,14 +21,14 @@ namespace ControleFinanceiro.Dominio.Entities
         public string ReceitaName { get; set; }
 
         [StringLength(100)]
-        public string ReceitaDescricao { get; set; }
+        public string? ReceitaDescricao { get; set; }
 
 
         public double ReceitaValor { get; set; }
 
         public DateTime ReceitaData { get; set; }
 
-        public DateTime ReceitaDataFim { get; set; }
+        public DateTime? ReceitaDataFim { get; set; }
 
         // Enum
 

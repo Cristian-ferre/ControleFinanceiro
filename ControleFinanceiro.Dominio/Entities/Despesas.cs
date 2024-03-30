@@ -17,7 +17,7 @@ namespace ControleFinanceiro.Dominio.Entities
         public string DespesaName { get; set; }
 
         [StringLength(100)]
-        public string DespesaDescricao { get; set; }
+        public string? DespesaDescricao { get; set; }
 
 
         public double DespesaValor { get; set; }
@@ -25,7 +25,7 @@ namespace ControleFinanceiro.Dominio.Entities
 
         public DateTime DespesasData { get; set; }
 
-        public DateTime DespesasDataFim { get; set; }
+        public DateTime? DespesasDataFim { get; set; }
 
 
         // Enum

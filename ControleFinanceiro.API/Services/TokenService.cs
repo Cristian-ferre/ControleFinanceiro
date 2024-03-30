@@ -23,7 +23,7 @@ namespace ControleFinanceiro.API.Services
                 {
                     // definindo o payload do meu token 
                     // salvando o id do usuario no token
-                      new Claim("usuarioID", usuario.UsuarioId.ToString()),
+                      new Claim("UsuarioId", usuario.UsuarioId.ToString()),
                 }),
                 Expires = DateTime.UtcNow.AddHours(3),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

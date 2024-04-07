@@ -14,6 +14,17 @@ builder.Services.AddDbContext<ControleFinanceiroDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ControleFinanceiroDbConnection")));
 
 
+// Configuração do CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+    {
+        builder.WithOrigins("http://127.0.0.1:5173")
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
+
 //Utilizando um método de extensão para facilitar a organização
 builder.Services.adicionarDependecias();
 
@@ -112,6 +123,13 @@ builder.Services.AddAuthentication(x =>
 
 var app = builder.Build();
 
+
+
+
+
+
+
+app.UseCors("AllowSpecificOrigin");
 
 
 if (app.Environment.IsDevelopment())

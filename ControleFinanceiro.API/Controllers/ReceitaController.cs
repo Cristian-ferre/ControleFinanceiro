@@ -144,11 +144,11 @@ namespace ControleFinanceiro.API.Controllers
         /// <param >Informe a Data atual </param>
         [HttpGet("ObterTodas")]
         //[Authorize]
-        public ActionResult ObterTodas(DateOnly dataParaExibir)
+        public ActionResult ObterTodas(DateOnly dataParaExibir, Guid usuarioID)
         {
             try
             {
-                var receitasNoIntervalo = _IReceita.ObterTodas(dataParaExibir);
+                var receitasNoIntervalo = _IReceita.ObterTodas(dataParaExibir, usuarioID);
 
                 var receitaGetDTOs = receitasNoIntervalo.Select(receita => new ReceitaGetDTO
                 {

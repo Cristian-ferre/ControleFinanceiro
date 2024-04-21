@@ -21,13 +21,13 @@ namespace ControleFinanceiro.Dados.Repositories
             {
 
                 //var despesasDataFim = despesa.DespesasData.AddMonths(despesa.DespesasQuantidadeMeses);
-                DateTime? despesasDataFim = null ;
+                DateTime? despesasDataFim = null;
                 if (despesa.DespesasQuantidadeMeses != 0)
                 {
-                  
-                     despesasDataFim = despesa.DespesasData.AddMonths(despesa.DespesasQuantidadeMeses);
+
+                    despesasDataFim = despesa.DespesasData.AddMonths(despesa.DespesasQuantidadeMeses);
                 }
-                
+
 
 
 
@@ -78,6 +78,7 @@ namespace ControleFinanceiro.Dados.Repositories
                 despesaExistente.DespesasDataFim = despesasDataFim;
                 despesaExistente.StatusDespesas = despesa.StatusDespesas;
                 despesaExistente.CategoriaId = despesa.CategoriaId;
+                despesaExistente.TipoValor = despesa.TipoValor;
 
                 _context.SaveChanges();
 
@@ -89,20 +90,17 @@ namespace ControleFinanceiro.Dados.Repositories
             }
         }
 
-        public IEnumerable<Despesas> ObterTodas(DateOnly data)
+        public IEnumerable<Despesas> ObterTodas(DateOnly data, Guid usuarioID)
         {
 
             // Converte DateOnly em DateTime com horário definido como meia-noite   
             DateTime dataEscolhida = data.ToDateTime(new TimeOnly(0, 0, 0, 0));
 
             return _context.Despesas
-                .Where(r =>
-                    (r.DespesasData.Year == dataEscolhida.Year &&
-                    r.DespesasData.Month == dataEscolhida.Month) ||
-                    (r.DespesasData <= dataEscolhida && (r.DespesasDataFim == null || r.DespesasDataFim >= dataEscolhida))
-                ).ToList();
-
-
+                    .Where(r => r.UsuarioId == usuarioID &&
+                    ((r.DespesasData.Year == dataEscolhida.Year && r.DespesasData.Month == dataEscolhida.Month) ||
+                    (r.DespesasData <= dataEscolhida && (r.DespesasDataFim == null || r.DespesasDataFim >= dataEscolhida)))
+                    ).ToList();
         }
 
         public object Remover(int despesaID)

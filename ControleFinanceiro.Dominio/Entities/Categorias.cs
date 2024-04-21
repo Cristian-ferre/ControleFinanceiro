@@ -19,7 +19,9 @@ namespace ControleFinanceiro.Dominio.Entities
 
         [Required]
         [StringLength(100)]
-        public string CategoriaDescricao { get; set; }
+        public string? CategoriaDescricao { get; set; }
+
+        public bool CategoriaDefault {  get; set; }
 
         // Relacionamentos e FKs
 

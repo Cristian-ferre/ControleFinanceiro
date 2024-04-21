@@ -20,17 +20,19 @@ namespace ControleFinanceiro.Dominio.Entities
         public string? DespesaDescricao { get; set; }
 
 
-        public double DespesaValor { get; set; }
+        public double? DespesaValor { get; set; }
 
 
         public DateTime DespesasData { get; set; }
 
         public DateTime? DespesasDataFim { get; set; }
 
-
         // Enum
 
         public StatusDespesas StatusDespesas { get; set; }
+
+        public TipoValor? TipoValor { get; set; }
+
 
         // Relacionamentos
         [Required]

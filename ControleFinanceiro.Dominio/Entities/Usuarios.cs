@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ControleFinanceiro.Dominio.Entities
 {
@@ -29,7 +24,7 @@ namespace ControleFinanceiro.Dominio.Entities
         public required string Senha { get; set; }
 
         [Required]
-        [StringLength(320)]
+        [StringLength(150)]
         public required string Email { get; set; }
 
         public string? Foto { get; set; }

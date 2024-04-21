@@ -37,5 +37,6 @@ namespace ControleFinanceiro.Dominio.Entities
 
         public ICollection<Receitas>? Receitas { get; set; } 
 
+
     }
 }

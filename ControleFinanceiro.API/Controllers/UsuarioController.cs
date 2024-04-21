@@ -34,7 +34,7 @@ namespace ControleFinanceiro.API.Controllers
                     string jwtKey = _configuration["JwtSettings:Key"];
                     var token = TokenService.GenerateToken(usuario, jwtKey);
 
-                    return Ok(new { Token = token });
+                    return Ok(new { Token = token, UsuarioID = usuario.UsuarioId, Nome = usuario.Nome, Email = usuario.Email });
                 }
                 else
                 {

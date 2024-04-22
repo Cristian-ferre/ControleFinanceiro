@@ -11,6 +11,8 @@ namespace ControleFinanceiro.Dominio.DTOs
         public double DespesaValor { get; set; }
         public DateTime DespesasData { get; set; }
         public int DespesasQuantidadeMeses { get; set; }
+        public TipoValor? TipoValor { get; set; }
+
         public StatusDespesas StatusDespesas { get; set; }
         public int CategoriaId { get; set; }
     }

@@ -1,11 +1,7 @@
 ﻿using ControleFinanceiro.Dominio.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ControleFinanceiro.Dominio.Entities
 {
@@ -24,7 +20,7 @@ namespace ControleFinanceiro.Dominio.Entities
         public string? ReceitaDescricao { get; set; }
 
 
-        public double ReceitaValor { get; set; }
+        public double? ReceitaValor { get; set; }
 
         public DateTime ReceitaData { get; set; }
 

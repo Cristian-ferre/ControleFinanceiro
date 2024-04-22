@@ -48,7 +48,7 @@ namespace ControleFinanceiro.API.Controllers
         /// <param name="data">Informe a Data atual, formato americano - month/day/year </param>
         [Authorize]
         [HttpGet("ObterTodas")]
-        public ActionResult ObterTodas(DateOnly data)
+        public ActionResult ObterTodas(DateOnly data, Guid usuarioID)
         {
 
             if (data == null)
@@ -56,7 +56,7 @@ namespace ControleFinanceiro.API.Controllers
                 return Json(new { success = false, message = "Data não informada!!" });
             }
 
-            var listDespesas = _repositoryDespesa.ObterTodas(data);
+            var listDespesas = _repositoryDespesa.ObterTodas(data, usuarioID);
             if (listDespesas == null)
             {
                 return Json(new { success = false, message = "nenhuma despesa encontrada" });

@@ -4,6 +4,7 @@ using ControleFinanceiro.Dados.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleFinanceiro.Dados.Migrations
 {
     [DbContext(typeof(ControleFinanceiroDbContext))]
-    partial class ControleFinanceiroDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240421150825_alteracoesEmTodaEntidades")]
+    partial class alteracoesEmTodaEntidades
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +48,7 @@ namespace ControleFinanceiro.Dados.Migrations
 
                     b.HasKey("CategoriaId");
 
-                    b.ToTable("Categorias", (string)null);
+                    b.ToTable("Categorias");
                 });
 
             modelBuilder.Entity("ControleFinanceiro.Dominio.Entities.Despesas", b =>
@@ -92,7 +95,7 @@ namespace ControleFinanceiro.Dados.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("Despesas", (string)null);
+                    b.ToTable("Despesas");
                 });
 
             modelBuilder.Entity("ControleFinanceiro.Dominio.Entities.Receitas", b =>
@@ -131,7 +134,7 @@ namespace ControleFinanceiro.Dados.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("Receitas", (string)null);
+                    b.ToTable("Receitas");
                 });
 
             modelBuilder.Entity("ControleFinanceiro.Dominio.Entities.Usuarios", b =>
@@ -163,7 +166,7 @@ namespace ControleFinanceiro.Dados.Migrations
 
                     b.HasKey("UsuarioId");
 
-                    b.ToTable("Usuarios", (string)null);
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("ControleFinanceiro.Dominio.Entities.Despesas", b =>

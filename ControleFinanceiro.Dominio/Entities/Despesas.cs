@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ControleFinanceiro.Dominio.Enums;
 
@@ -20,17 +19,19 @@ namespace ControleFinanceiro.Dominio.Entities
         public string? DespesaDescricao { get; set; }
 
 
-        public double DespesaValor { get; set; }
+        public double? DespesaValor { get; set; }
 
 
         public DateTime DespesasData { get; set; }
 
         public DateTime? DespesasDataFim { get; set; }
 
-
         // Enum
 
         public StatusDespesas StatusDespesas { get; set; }
+
+        public TipoValor? TipoValor { get; set; }
+
 
         // Relacionamentos
         [Required]

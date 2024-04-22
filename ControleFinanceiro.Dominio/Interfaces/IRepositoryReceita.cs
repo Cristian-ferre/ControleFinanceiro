@@ -4,7 +4,7 @@ namespace ControleFinanceiro.Dominio.Interfaces
 {
     public interface IRepositoryReceita
     {
-        IEnumerable<Receitas> ObterTodas(DateOnly dataParaExibir);
+        IEnumerable<Receitas> ObterTodas(DateOnly dataParaExibir, Guid usuarioID);
 
         void Adicionar(Receitas receitas);
 

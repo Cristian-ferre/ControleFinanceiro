@@ -11,7 +11,7 @@ namespace ControleFinanceiro.Dominio.Interfaces
 
         object Remover(int despesaID);
 
-        IEnumerable<Despesas> ObterTodas(DateOnly data);
+        IEnumerable<Despesas> ObterTodas(DateOnly data, Guid usuarioID);
 
         //Filtros para Obter:
     }

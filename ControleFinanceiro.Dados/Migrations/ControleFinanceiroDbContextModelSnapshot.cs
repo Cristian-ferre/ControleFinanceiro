@@ -42,7 +42,7 @@ namespace ControleFinanceiro.Dados.Migrations
 
                     b.HasKey("CategoriaId");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categorias", (string)null);
                 });
 
             modelBuilder.Entity("ControleFinanceiro.Dominio.Entities.Despesas", b =>
@@ -86,7 +86,7 @@ namespace ControleFinanceiro.Dados.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("Despesas");
+                    b.ToTable("Despesas", (string)null);
                 });
 
             modelBuilder.Entity("ControleFinanceiro.Dominio.Entities.Receitas", b =>
@@ -125,7 +125,7 @@ namespace ControleFinanceiro.Dados.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("Receitas");
+                    b.ToTable("Receitas", (string)null);
                 });
 
             modelBuilder.Entity("ControleFinanceiro.Dominio.Entities.Usuarios", b =>
@@ -157,7 +157,7 @@ namespace ControleFinanceiro.Dados.Migrations
 
                     b.HasKey("UsuarioId");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Usuarios", (string)null);
                 });
 
             modelBuilder.Entity("ControleFinanceiro.Dominio.Entities.Despesas", b =>

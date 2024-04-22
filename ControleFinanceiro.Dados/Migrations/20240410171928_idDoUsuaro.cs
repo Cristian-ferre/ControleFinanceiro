@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ControleFinanceiro.Dados.Migrations
 {
     /// <inheritdoc />
-    public partial class camposNullDespesas : Migration
+    public partial class idDoUsuaro : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

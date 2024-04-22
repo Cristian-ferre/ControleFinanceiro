@@ -8,8 +8,8 @@ namespace ControleFinanceiro.Dominio.Enums
 {
     public enum  StatusDespesas : int
     {
-        Concluido = 0,
-        Pendente = 1,
+        Pendente = 0,
+        Concluido = 1,
         Cancelado = 2
     }
 }

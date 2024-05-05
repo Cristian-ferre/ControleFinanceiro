@@ -7,6 +7,10 @@ namespace ControleFinanceiro.Dominio.Interfaces
     {
         object Adicionar (CategoriaDTO categorias);
 
-        ICollection<Categorias> ObterTodas();
+        ICollection<Categorias> ObterTodas(Guid usuarioId);
+
+        object Remover(Guid usuarioId, int categoriaId);
+
+
     }
 }

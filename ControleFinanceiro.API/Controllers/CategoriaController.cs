@@ -20,7 +20,7 @@ namespace ControleFinanceiro.API.Controllers
         }
 
         [HttpPost("Adicionar")]
-        [Authorize]
+        //[Authorize]
         public ActionResult Adicionar([FromBody] CategoriaDTO categorias)
         {
             var result = _repositoryCategoria.Adicionar(categorias);
@@ -28,10 +28,10 @@ namespace ControleFinanceiro.API.Controllers
         }
 
         [HttpGet("ObterTodas")]
-        [Authorize]
-        public ActionResult ObterTodas()
+        //[Authorize]
+        public ActionResult ObterTodas(Guid usuarioId)
         {
-            var result = _repositoryCategoria.ObterTodas();
+            var result = _repositoryCategoria.ObterTodas(usuarioId);
             return Ok(result);
         }
 

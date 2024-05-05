@@ -4,5 +4,6 @@
     {
         public string CategoriaNome { get; set; }
         public string CategoriaDescricao { get; set; }
+        public Guid UsuarioId { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace ControleFinanceiro.Dados.Repositories
                 {
                     CategoriaNome = categorias.CategoriaNome,
                     CategoriaDescricao = categorias.CategoriaDescricao,
+                    UsuarioId = categorias.UsuarioId,
                 };
 
                 _context.Categorias.Add(Categorias);
@@ -41,17 +42,25 @@ namespace ControleFinanceiro.Dados.Repositories
             }
         }
 
-        public ICollection<Categorias> ObterTodas()
+        public ICollection<Categorias> ObterTodas(Guid usuarioId)
         {
             try
             {
-                var categorias =  _context.Categorias.ToList();
-                return categorias;
+                var categoria = _context.Categorias.Where(c => (c.UsuarioId == usuarioId || c.CategoriaDefault == true) && c.CategoriaDeletado == false).ToList();
+
+                //v1.0:
+                //var categorias =  _context.Categorias.ToList();
+                return categoria;
             }
             catch
             {
                 return new List<Categorias>();
             }
+        }
+
+        public object Remover(Guid usuarioId, int categoriaId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

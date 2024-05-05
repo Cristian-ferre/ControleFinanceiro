@@ -4,6 +4,7 @@ using ControleFinanceiro.Dados.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleFinanceiro.Dados.Migrations
 {
     [DbContext(typeof(ControleFinanceiroDbContext))]
-    partial class ControleFinanceiroDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240505193304_ajustandoRelacionamentoCategoriaEUsuario")]
+    partial class ajustandoRelacionamentoCategoriaEUsuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,6 +40,7 @@ namespace ControleFinanceiro.Dados.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("CategoriaDescricao")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -45,7 +49,7 @@ namespace ControleFinanceiro.Dados.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid?>("UsuarioId")
+                    b.Property<Guid>("UsuarioId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CategoriaId");
@@ -72,12 +76,15 @@ namespace ControleFinanceiro.Dados.Migrations
                     b.Property<double?>("DespesaValor")
                         .HasColumnType("float");
 
+                    b.Property<int>("DespesasDespesaId")
+                        .HasColumnType("int");
+
                     b.Property<int>("StatusDespesas")
                         .HasColumnType("int");
 
                     b.HasKey("DespesaParcelaId");
 
-                    b.HasIndex("DespesaId");
+                    b.HasIndex("DespesasDespesaId");
 
                     b.ToTable("DespesaParcelas");
                 });
@@ -91,6 +98,9 @@ namespace ControleFinanceiro.Dados.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DespesaId"));
 
                     b.Property<int>("CategoriaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoriasCategoriaId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DespesaDataVencimento")
@@ -117,19 +127,25 @@ namespace ControleFinanceiro.Dados.Migrations
                     b.Property<int>("FormaPagamentoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("FormasPagamentoFormaPagamentoId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TipoValor")
                         .HasColumnType("int");
 
                     b.Property<Guid>("UsuarioId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("UsuariosUsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("DespesaId");
 
-                    b.HasIndex("CategoriaId");
+                    b.HasIndex("CategoriasCategoriaId");
 
-                    b.HasIndex("FormaPagamentoId");
+                    b.HasIndex("FormasPagamentoFormaPagamentoId");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("UsuariosUsuarioId");
 
                     b.ToTable("Despesas");
                 });
@@ -169,12 +185,15 @@ namespace ControleFinanceiro.Dados.Migrations
                     b.Property<double>("ReceitaValor")
                         .HasColumnType("float");
 
+                    b.Property<int>("ReceitasReceitaId")
+                        .HasColumnType("int");
+
                     b.Property<int>("StatusDespesas")
                         .HasColumnType("int");
 
                     b.HasKey("ReceitaParcelaId");
 
-                    b.HasIndex("ReceitaId");
+                    b.HasIndex("ReceitasReceitaId");
 
                     b.ToTable("ReceitaParcelas");
                 });
@@ -285,9 +304,12 @@ namespace ControleFinanceiro.Dados.Migrations
                     b.Property<Guid>("UsuarioId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("UsuariosUsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("UsuarioOperacaoLogId");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("UsuariosUsuarioId");
 
                     b.ToTable("UsuariosOperacoesLog");
                 });
@@ -296,7 +318,9 @@ namespace ControleFinanceiro.Dados.Migrations
                 {
                     b.HasOne("ControleFinanceiro.Dominio.Entities.Usuarios", "Usuarios")
                         .WithMany("Categorias")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuarios");
                 });
@@ -305,7 +329,7 @@ namespace ControleFinanceiro.Dados.Migrations
                 {
                     b.HasOne("ControleFinanceiro.Dominio.Entities.Despesas", "Despesas")
                         .WithMany("DespesaParcelas")
-                        .HasForeignKey("DespesaId")
+                        .HasForeignKey("DespesasDespesaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -316,19 +340,19 @@ namespace ControleFinanceiro.Dados.Migrations
                 {
                     b.HasOne("ControleFinanceiro.Dominio.Entities.Categorias", "Categorias")
                         .WithMany("Despesas")
-                        .HasForeignKey("CategoriaId")
+                        .HasForeignKey("CategoriasCategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ControleFinanceiro.Dominio.Entities.FormasPagamento", "FormasPagamento")
                         .WithMany("Despesas")
-                        .HasForeignKey("FormaPagamentoId")
+                        .HasForeignKey("FormasPagamentoFormaPagamentoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ControleFinanceiro.Dominio.Entities.Usuarios", "Usuarios")
                         .WithMany("Despesas")
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("UsuariosUsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -343,7 +367,7 @@ namespace ControleFinanceiro.Dados.Migrations
                 {
                     b.HasOne("ControleFinanceiro.Dominio.Entities.Receitas", "Receitas")
                         .WithMany()
-                        .HasForeignKey("ReceitaId")
+                        .HasForeignKey("ReceitasReceitaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -365,7 +389,7 @@ namespace ControleFinanceiro.Dados.Migrations
                 {
                     b.HasOne("ControleFinanceiro.Dominio.Entities.Usuarios", "Usuarios")
                         .WithMany("UsuariosOperacoesLog")
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("UsuariosUsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

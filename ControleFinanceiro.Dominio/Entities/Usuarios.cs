@@ -32,10 +32,10 @@ namespace ControleFinanceiro.Dominio.Entities
         public bool Ativo { get; set; }
 
         // Relacionamentos e FKs:
-
         public ICollection<Despesas>? Despesas { get; set; }
-
         public ICollection<Receitas>? Receitas { get; set; } 
+        public ICollection<Categorias>? Categorias { get; set; } 
+        public ICollection<UsuariosOperacoesLog>? UsuariosOperacoesLog {  get; set; }
 
 
     }

@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace ControleFinanceiro.Dominio.Entities
 {
     public class Receitas
@@ -11,7 +10,6 @@ namespace ControleFinanceiro.Dominio.Entities
         public int ReceitaId { get; set; }
 
         // atributo
-
         [Required]
         [StringLength(50)]
         public string ReceitaName { get; set; }
@@ -19,22 +17,24 @@ namespace ControleFinanceiro.Dominio.Entities
         [StringLength(100)]
         public string? ReceitaDescricao { get; set; }
 
+        [Required]
+        public DateTime ReceitaDataVencimento { get; set; }
 
-        public double? ReceitaValor { get; set; }
+        [Required]
+        public int ReceitaQuantidadeParcelas { get; set; }
 
-        public DateTime ReceitaData { get; set; }
+        [Required]
+        public DateTime ReceitaDataInclusao { get; set; }
 
-        public DateTime? ReceitaDataFim { get; set; }
+        public bool ReceitaDeletado { get; set; }
 
         // Enum
-
         public TipoValor TipoValor { get; set; }
 
         // Relacionamentos e FKs
-
         [Required]
-        [ForeignKey("Usuarios")]
         public Guid UsuarioId { get; set; }
+        [ForeignKey("UsuarioId")]
         public Usuarios Usuarios { get; set; }
     }
 }

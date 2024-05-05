@@ -10,7 +10,7 @@ namespace ControleFinanceiro.Dominio.Entities
         [Key]
         public int DespesaId { get; set; }
 
-        // atributo
+        // atributos
         [Required]
         [StringLength(50)]
         public string DespesaName { get; set; }
@@ -18,31 +18,34 @@ namespace ControleFinanceiro.Dominio.Entities
         [StringLength(100)]
         public string? DespesaDescricao { get; set; }
 
+        public DateTime DespesaDataVencimento { get; set; }
 
-        public double? DespesaValor { get; set; }
+        [Required]
+        public int DespesaQuantidadeParcelas {  get; set; }
 
+        [Required]
+        public DateTime DespesasDataInclusao { get; set; }
 
-        public DateTime DespesasData { get; set; }
-
-        public DateTime? DespesasDataFim { get; set; }
+        public bool DespesaDeletado { get; set; }   
 
         // Enum
-
-        public StatusDespesas StatusDespesas { get; set; }
-
         public TipoValor? TipoValor { get; set; }
-
 
         // Relacionamentos
         [Required]
-        [ForeignKey("Usuarios")]
         public Guid UsuarioId { get; set; }
+        [ForeignKey("UsuarioId")]
         public Usuarios Usuarios { get; set; }
 
         [Required]
-        [ForeignKey("Categorias")]
         public int CategoriaId { get; set; }
+        [ForeignKey("CategoriaId")]
         public Categorias Categorias { get; set; }
 
+        public int FormaPagamentoId { get; set; }
+        [ForeignKey("FormaPagamentoId")]
+        public FormasPagamento FormasPagamento { get; set; }
+
+        public ICollection<DespesaParcelas> DespesaParcelas { get; set; }
     }
 }

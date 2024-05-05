@@ -46,9 +46,9 @@ namespace ControleFinanceiro.API.Controllers
                     TipoValor = receitas.TipoValor,
                     ReceitaName = receitas.ReceitaName,
                     ReceitaDescricao = receitas.ReceitaDescricao,
-                    ReceitaValor = receitas.ReceitaValor,
-                    ReceitaData = receitas.ReceitaData,
-                    ReceitaDataFim = receitaDataFim,
+                    //ReceitaValor = receitas.ReceitaValor,
+                    //ReceitaData = receitas.ReceitaData,
+                    //ReceitaDataFim = receitaDataFim,
                     UsuarioId = receitas.UsuarioId,
                 };
 
@@ -88,9 +88,9 @@ namespace ControleFinanceiro.API.Controllers
                 {
                     ReceitaName = receitaAtualizada.ReceitaName,
                     ReceitaDescricao = receitaAtualizada.ReceitaDescricao,
-                    ReceitaData = receitaAtualizada.ReceitaData,
-                    ReceitaDataFim = receitaDataFim,
-                    ReceitaValor = receitaAtualizada.ReceitaValor,
+                    //ReceitaData = receitaAtualizada.ReceitaData,
+                    //ReceitaDataFim = receitaDataFim,
+                    //ReceitaValor = receitaAtualizada.ReceitaValor,
                     TipoValor = receitaAtualizada.TipoValor
                 };
 
@@ -155,9 +155,9 @@ namespace ControleFinanceiro.API.Controllers
                     ReceitaId = receita.ReceitaId,
                     ReceitaName = receita.ReceitaName,
                     ReceitaDescricao = receita.ReceitaDescricao,
-                    ReceitaData = receita.ReceitaData,
-                    ReceitaDataFim = receita.ReceitaDataFim,
-                    ReceitaValor = receita.ReceitaValor,
+                    //ReceitaData = receita.ReceitaData,
+                    //ReceitaDataFim = receita.ReceitaDataFim,
+                    //ReceitaValor = receita.ReceitaValor,
                 }).ToList();
 
                 return Ok(receitaGetDTOs);

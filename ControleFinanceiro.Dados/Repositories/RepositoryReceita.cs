@@ -41,16 +41,19 @@ namespace ControleFinanceiro.Dados.Repositories
 
         public IEnumerable<Receitas> ObterTodas(DateOnly dataParaExibir, Guid usuarioID)
         {
-            // Converte DateOnly em DateTime com horário definido como meia-noite   
-            DateTime dataEscolhida = dataParaExibir.ToDateTime(new TimeOnly(0, 0, 0, 0));
+            //// Converte DateOnly em DateTime com horário definido como meia-noite   
+            //DateTime dataEscolhida = dataParaExibir.ToDateTime(new TimeOnly(0, 0, 0, 0));
 
-            // Montando ENDPOINT para exibir todas a receitas Variáveis e fixas com base no ano e mes 
-            return _context.Receitas
-                .Where(r => r.UsuarioId == usuarioID && (
-                    (r.ReceitaData.Year == dataEscolhida.Year &&
-                    r.ReceitaData.Month == dataEscolhida.Month) ||
-                    (r.ReceitaData <= dataEscolhida && (r.ReceitaDataFim == null || r.ReceitaDataFim >= dataEscolhida)))
-                ).ToList();
+            //// Montando ENDPOINT para exibir todas a receitas Variáveis e fixas com base no ano e mes 
+            //return _context.Receitas
+            //    .Where(r => r.UsuarioId == usuarioID && (
+            //        (r.ReceitaData.Year == dataEscolhida.Year &&
+            //        r.ReceitaData.Month == dataEscolhida.Month) ||
+            //        (r.ReceitaData <= dataEscolhida && (r.ReceitaDataFim == null || r.ReceitaDataFim >= dataEscolhida)))
+            //    ).ToList();
+
+            throw new NotImplementedException();
+
         }
 
     }

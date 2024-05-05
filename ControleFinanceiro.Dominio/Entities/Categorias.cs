@@ -1,5 +1,5 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ControleFinanceiro.Dominio.Entities
 {
@@ -13,18 +13,22 @@ namespace ControleFinanceiro.Dominio.Entities
         [StringLength(50)]
         public string CategoriaNome { get; set; }
 
-        [Required]
         [StringLength(100)]
         public string? CategoriaDescricao { get; set; }
 
         public bool CategoriaDefault {  get; set; }
+
+        public bool CategoriaDeletado { get; set; }
 
         // Relacionamentos e FKs
 
         public ICollection<Despesas> Despesas { get; set; }
 
 
+        public Guid? UsuarioId { get; set; }
 
+        [ForeignKey("UsuarioId")]
+        public Usuarios? Usuarios { get; set; }
 
 
     }

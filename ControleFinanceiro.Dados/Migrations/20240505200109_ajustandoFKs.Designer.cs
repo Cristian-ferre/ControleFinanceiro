@@ -4,6 +4,7 @@ using ControleFinanceiro.Dados.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleFinanceiro.Dados.Migrations
 {
     [DbContext(typeof(ControleFinanceiroDbContext))]
-    partial class ControleFinanceiroDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240505200109_ajustandoFKs")]
+    partial class ajustandoFKs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,6 +40,7 @@ namespace ControleFinanceiro.Dados.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("CategoriaDescricao")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -45,7 +49,7 @@ namespace ControleFinanceiro.Dados.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid?>("UsuarioId")
+                    b.Property<Guid>("UsuarioId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CategoriaId");
@@ -296,7 +300,9 @@ namespace ControleFinanceiro.Dados.Migrations
                 {
                     b.HasOne("ControleFinanceiro.Dominio.Entities.Usuarios", "Usuarios")
                         .WithMany("Categorias")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuarios");
                 });

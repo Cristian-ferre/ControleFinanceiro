@@ -60,7 +60,30 @@ namespace ControleFinanceiro.Dados.Repositories
 
         public object Remover(Guid usuarioId, int categoriaId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var categoria = _context.Categorias.FirstOrDefault(c => c.CategoriaId == categoriaId && c.UsuarioId == usuarioId);
+
+                if (categoria == null)
+                {
+                    return new { success = false, message = "Categoria não encontrada" };
+                }
+
+                if (categoria.CategoriaDefault == true)
+                {
+                    return new { success = false, message = "Não é possivel remover uma categoria Default" };
+                }
+
+                categoria.CategoriaDeletado = true;
+                _context.SaveChanges();
+
+                return new { success = true, message = "Categoria removida com sucesso!!" };
+            }
+            catch (Exception ex)
+            {
+                return new { success = false, message = "ALgo deu errado!!", error = ex.Message };
+            }
+
         }
     }
 }

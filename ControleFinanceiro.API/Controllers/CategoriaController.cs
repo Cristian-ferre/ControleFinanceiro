@@ -36,6 +36,12 @@ namespace ControleFinanceiro.API.Controllers
         }
 
 
+        [HttpDelete("Remover")]
+        public ActionResult Remover(Guid usuarioId, int categoriaId)
+        {
+            var result = _repositoryCategoria.Remover(usuarioId, categoriaId);
+            return Ok(result);
+        }
       
     }
 }

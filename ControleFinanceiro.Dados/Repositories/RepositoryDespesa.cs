@@ -48,8 +48,6 @@ namespace ControleFinanceiro.Dados.Repositories
                     _context.DespesaParcelas.Add(newDespesaParcela);
                     count++;
                 }
-
-
                 _context.SaveChanges();
 
                 LogService.UsuariosOperacoesLog("Despesa", "Adicionar", "POST", false, despesa.UsuarioId, _context);

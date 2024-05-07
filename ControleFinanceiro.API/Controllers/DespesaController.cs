@@ -21,7 +21,7 @@ namespace ControleFinanceiro.API.Controllers
         /// <param name="despesa"></param>
         /// <returns> Despesa recém-criada</returns>
         /// <response code="201">Sucesso</response>
-        [Authorize]
+        //[Authorize]
         [HttpPost("Adicionar")]
         public ActionResult Adicionar([FromBody] DespesaDTO despesa)
         {

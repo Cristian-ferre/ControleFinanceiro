@@ -17,43 +17,51 @@ namespace ControleFinanceiro.Dados.Repositories
 
         public object Adicionar(DespesaDTO despesa)
         {
-            //try
-            //{
+            try
+            {
+                var newDespesa = new Despesas
+                {
+                    DespesaName = despesa.DespesaName,
+                    DespesaDescricao = despesa.DespesaDescricao,
+                    TipoValor = despesa.TipoValor,
+                    DespesaDataVencimento = despesa.DespesaDataVencimento,
+                    DespesaQuantidadeParcelas = despesa.DespesaQuantidadeParcelas,
+                    DespesasDataInclusao = DateTime.Now,
+                    UsuarioId = despesa.UsuarioId,
+                    CategoriaId = despesa.CategoriaId,
+                    FormaPagamentoId = despesa.FormaPagamentoId,
+                };
 
-            //    //var despesasDataFim = despesa.DespesasData.AddMonths(despesa.DespesasQuantidadeMeses);
-            //    DateTime? despesasDataFim = null;
-            //    if (despesa.DespesasQuantidadeMeses != 0)
-            //    {
+                _context.Despesas.Add(newDespesa);
+                _context.SaveChanges();
 
-            //        despesasDataFim = despesa.DespesasData.AddMonths(despesa.DespesasQuantidadeMeses);
-            //    }
+                int count = 1;
+
+                while (count <= despesa.DespesaQuantidadeParcelas)
+                {
+                    var newDespesaParcela = new DespesaParcelas
+                    {
+                        DespesaValor = despesa.DespesaValor,
+                        StatusDespesas = Dominio.Enums.StatusDespesas.Pendente,
+                        DespesaId = newDespesa.DespesaId
+                    };
+                    _context.DespesaParcelas.Add(newDespesaParcela);
+                    count++;
+                }
 
 
+                _context.SaveChanges();
 
+                LogService.UsuariosOperacoesLog("Despesa", "Adicionar", "POST", false, despesa.UsuarioId, _context);
 
+                return new { success = true, message = $"Despesa {newDespesa.DespesaName} Adicionada com sucesso", data = newDespesa };
+            }
+            catch (Exception ex)
+            {
+                LogService.UsuariosOperacoesLog("Despesa", "Adicionar", "POST", true, despesa.UsuarioId, _context);
 
-            //    var newDespesa = new Despesas
-            //    {
-            //        DespesaName = despesa.DespesaName,
-            //        DespesaDescricao = despesa.DespesaDescricao,
-            //        DespesaValor = despesa.DespesaValor,
-            //        DespesasData = despesa.DespesasData,
-            //        DespesasDataFim = despesasDataFim,
-            //        StatusDespesas = despesa.StatusDespesas,
-            //        CategoriaId = despesa.CategoriaId,
-            //        UsuarioId = despesa.UsuarioId,
-            //        TipoValor = despesa.TipoValor
-            //    };
-            //    _context.Despesas.Add(newDespesa);
-            //    _context.SaveChanges();
-            //    return new { success = true, message = $"Despesa {newDespesa.DespesaName} Adicionada com sucesso", data = newDespesa };
-            //}
-            //catch (Exception ex)
-            //{
-            //    return new { succes = false, message = "ALgo deu errado!!", error = ex.Message };
-            //}
-            throw new NotImplementedException();
-
+                return new { succes = false, message = "ALgo deu errado!!", error = ex.Message };
+            }
         }
 
         public object Atualizar(DespesaDTO despesa)

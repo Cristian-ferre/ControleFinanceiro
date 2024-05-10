@@ -17,8 +17,6 @@ namespace ControleFinanceiro.Dominio.Entities
         [StringLength(100)]
         public string? ReceitaDescricao { get; set; }
 
-        [Required]
-        public DateTime ReceitaDataVencimento { get; set; }
 
         [Required]
         public int ReceitaQuantidadeParcelas { get; set; }

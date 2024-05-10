@@ -15,6 +15,8 @@ namespace ControleFinanceiro.API.Controllers
             _repositoryDespesa = repositoryDespesa;
         }
 
+
+        #region 
         /// <summary>
         /// Cadastro de nova Despesa
         /// </summary>
@@ -28,6 +30,7 @@ namespace ControleFinanceiro.API.Controllers
             var result = _repositoryDespesa.Adicionar(despesa);
             return Ok(result);
         }
+        #endregion
 
         /// <summary>
         /// Editar Despesas
@@ -36,9 +39,10 @@ namespace ControleFinanceiro.API.Controllers
         /// <returns>Despesa editada</returns>
         [Authorize]
         [HttpPut("Atualizar")]
-        public ActionResult Atualizar([FromBody] DespesaDTO despesa)
+        public ActionResult Atualizar([FromBody] DespesaParcelaDTO despesaValues)
         {
-            var result = _repositoryDespesa.Atualizar(despesa);
+            Guid usuarioId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "UsuarioId")?.Value);
+            var result = _repositoryDespesa.Atualizar(despesaValues, usuarioId);
             return Ok(result);
         }
 

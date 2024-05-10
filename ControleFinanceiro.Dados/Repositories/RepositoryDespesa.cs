@@ -24,7 +24,6 @@ namespace ControleFinanceiro.Dados.Repositories
                     DespesaName = despesa.DespesaName,
                     DespesaDescricao = despesa.DespesaDescricao,
                     TipoValor = despesa.TipoValor,
-                    DespesaDataVencimento = despesa.DespesaDataVencimento,
                     DespesaQuantidadeParcelas = despesa.DespesaQuantidadeParcelas,
                     DespesasDataInclusao = DateTime.Now,
                     UsuarioId = despesa.UsuarioId,
@@ -43,6 +42,7 @@ namespace ControleFinanceiro.Dados.Repositories
                     {
                         DespesaValor = despesa.DespesaValor,
                         StatusDespesas = Dominio.Enums.StatusDespesas.Pendente,
+                        DespesaDataVencimento = despesa.DespesaDataVencimento,
                         DespesaId = newDespesa.DespesaId
                     };
                     _context.DespesaParcelas.Add(newDespesaParcela);
@@ -62,43 +62,119 @@ namespace ControleFinanceiro.Dados.Repositories
             }
         }
 
-        public object Atualizar(DespesaDTO despesa)
+        public object Atualizar(DespesaParcelaDTO despesaValues, Guid usuarioId )
         {
-            //try
-            //{
-            //    if (despesa == null || despesa.DespesaId < 0)
-            //    {
-            //        return new { success = false, message = "ID de despesa inválido" };
-            //    };
+            try
+            {
 
-            //    var despesaExistente = _context.Despesas.Find(despesa.DespesaId);
+                if (!ValidarDespesa(despesaValues))
+                {
+                    return new { success = false, message = "Dados de despesa inválidos" };
+                }
 
-            //    if (despesaExistente == null)
-            //    {
-            //        return new { success = false, message = "Despesa não encontrada" };
-            //    }
+                var despesa = ObterDespesa(despesaValues.DespesaParcelaId, usuarioId);
+                if (despesa == null)
+                {
+                    return new { success = false, message = "Despesa não encontrada" };
+                }
 
-            //    var despesasDataFim = despesa.DespesasData.AddMonths(despesa.DespesasQuantidadeMeses);
+                if (despesaValues.EditarTodos)
+                {
+                    AtualizarDespesaCompleta(despesa, despesaValues);
+                }
+                else if (despesaValues.EditarApenasEsse)
+                {
+                    AtualizarDespesaParcela(despesa, despesaValues);
+                }
+                else if (despesaValues.EditarEsseProximos)
+                {
+                    AtualizarDespesaEProximasParcelas(despesa, despesaValues);
+                }
 
-            //    despesaExistente.DespesaName = despesa.DespesaName;
-            //    despesaExistente.DespesaDescricao = despesa.DespesaDescricao;
-            //    despesaExistente.DespesaValor = despesa.DespesaValor;
-            //    despesaExistente.DespesasData = despesa.DespesasData;
-            //    despesaExistente.DespesasDataFim = despesasDataFim;
-            //    despesaExistente.StatusDespesas = despesa.StatusDespesas;
-            //    despesaExistente.CategoriaId = despesa.CategoriaId;
-            //    despesaExistente.TipoValor = despesa.TipoValor;
+                if (despesaValues.AtualizarPagamento)
+                {
+                    AtualizarStatusDespesa(despesaValues);
+                }           
 
-            //    _context.SaveChanges();
+                _context.SaveChanges();
 
-            //    return new { success = true, message = $"Despesa {despesaExistente.DespesaName} editada com sucesso" };
-            //}
-            //catch (Exception ex)
-            //{
-            //    return new { seccess = false, message = "ALgo deu errado!! ", error = ex.Message };
-            //}
-            throw new NotImplementedException();
+                LogService.UsuariosOperacoesLog("Despesa", "Atualizar", "PUT", false, usuarioId, _context);
+                return new { success = true, message = $"Despesa {despesaValues.DespesaName} editada com sucesso" };
+            }
+            catch (Exception ex)
+            {
+                LogService.UsuariosOperacoesLog("Despesa", "Atualizar", "PUT", true, usuarioId, _context);
+                return new { seccess = false, message = "ALgo deu errado!! ", error = ex.Message };
+            }
 
+        }
+
+        private bool ValidarDespesa(DespesaParcelaDTO despesaValues)
+        {
+            return despesaValues != null && despesaValues.DespesaParcelaId > 0;
+        }
+
+        private Despesas ObterDespesa(int despesaParcelaId, Guid usuarioId)
+        {
+            
+            var despesasParcelas = _context.DespesaParcelas.First(p => p.DespesaParcelaId == despesaParcelaId);
+
+            //var despesa = _context.Despesas.FirstOrDefault(d => d.DespesaId == despesaExistente.DespesaId && d.UsuarioId == usuarioId);
+            return _context.Despesas.FirstOrDefault(d => d.DespesaId == despesasParcelas.DespesaId && d.UsuarioId == usuarioId);
+        }
+
+        private void AtualizarDespesaCompleta(Despesas despesa, DespesaParcelaDTO despesaValues)
+        {
+            var despesas = _context.Despesas.FirstOrDefault(d => d.DespesaId == despesa.DespesaId );
+            var despesasParcelas = _context.DespesaParcelas.Where(p => p.DespesaId == despesa.DespesaId).ToList();
+
+            despesas.DespesaName = despesaValues.DespesaName;
+            despesas.DespesaDescricao = despesaValues.DespesaDescricao;
+            despesas.TipoValor = despesaValues.TipoValor;
+            despesas.CategoriaId = despesaValues.CategoriaId;
+            despesas.FormaPagamentoId = despesaValues.FormaPagamentoId;
+
+            foreach (var parcela in despesasParcelas)
+            {
+                parcela.DespesaValor = despesaValues.DespesaValor;
+                parcela.DespesaDataVencimento = despesaValues.DespesaDataVencimento;
+            }
+        }
+
+        private void AtualizarDespesaParcela(Despesas despesa, DespesaParcelaDTO despesaValues)
+        {
+            var despesaParcela = despesa.DespesaParcelas.FirstOrDefault(p => p.DespesaParcelaId == despesaValues.DespesaParcelaId);
+            if (despesaParcela != null)
+            {
+                despesaParcela.DespesaValor = despesaValues.DespesaValor;
+                despesaParcela.DespesaDataVencimento = despesaValues.DespesaDataVencimento;
+                despesaParcela.StatusDespesas = despesaValues.StatusDespesas;
+            }
+        }
+
+        private void AtualizarDespesaEProximasParcelas(Despesas despesa, DespesaParcelaDTO despesaValues)
+        {
+            //despesa.DespesaName = despesaValues.DespesaName;
+            //despesa.DespesaDescricao = despesaValues.DespesaDescricao;
+            //despesa.TipoValor = despesaValues.TipoValor;
+            //despesa.CategoriaId = despesaValues.CategoriaId;
+            //despesa.FormaPagamentoId = despesaValues.FormaPagamentoId;
+            var despesaParcelasProximas = _context.DespesaParcelas.Where(p => p.DespesaId == despesa.DespesaId && p.DespesaParcelaId >= despesaValues.DespesaParcelaId).ToList();
+
+            foreach (var parcela in despesaParcelasProximas)
+            {
+                parcela.DespesaValor = despesaValues.DespesaValor;
+                parcela.DespesaDataVencimento = despesaValues.DespesaDataVencimento;
+            }
+        }
+
+        private void AtualizarStatusDespesa(DespesaParcelaDTO despesaValues)
+        {
+            var despesaParcela = _context.DespesaParcelas.FirstOrDefault(p => p.DespesaParcelaId == despesaValues.DespesaParcelaId);
+            if (despesaParcela != null)
+            {
+                despesaParcela.StatusDespesas = despesaValues.StatusDespesas;
+            }
         }
 
         public IEnumerable<Despesas> ObterTodas(DateOnly data, Guid usuarioID)

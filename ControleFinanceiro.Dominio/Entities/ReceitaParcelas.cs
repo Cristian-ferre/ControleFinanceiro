@@ -13,6 +13,10 @@ namespace ControleFinanceiro.Dominio.Entities
 
         public bool ReceitaParcelaDeletado { get; set; }
 
+
+        [Required]
+        public DateTime ReceitaDataRecebimento { get; set; }
+
         //Enums
 
         public StatusDespesas StatusDespesas { get; set; }

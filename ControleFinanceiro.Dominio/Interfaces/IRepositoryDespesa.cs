@@ -7,7 +7,7 @@ namespace ControleFinanceiro.Dominio.Interfaces
     {
         object Adicionar(DespesaDTO despesa);
 
-        object Atualizar (DespesaDTO despesa);
+        object Atualizar (DespesaParcelaDTO despesaValues, Guid usuarioId);
 
         object Remover(int despesaID);
 

@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using ControleFinanceiro.API;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,11 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 
 });
 
+
+builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

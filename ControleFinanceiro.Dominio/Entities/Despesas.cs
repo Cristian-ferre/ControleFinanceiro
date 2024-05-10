@@ -18,8 +18,6 @@ namespace ControleFinanceiro.Dominio.Entities
         [StringLength(100)]
         public string? DespesaDescricao { get; set; }
 
-        public DateTime DespesaDataVencimento { get; set; }
-
         [Required]
         public int DespesaQuantidadeParcelas {  get; set; }
 
@@ -38,13 +36,13 @@ namespace ControleFinanceiro.Dominio.Entities
         public Usuarios Usuarios { get; set; }
 
         [Required]
-        public int CategoriaId { get; set; }
+        public int? CategoriaId { get; set; }
         [ForeignKey("CategoriaId")]
-        public Categorias Categorias { get; set; }
+        public Categorias? Categorias { get; set; }
 
-        public int FormaPagamentoId { get; set; }
+        public int? FormaPagamentoId { get; set; }
         [ForeignKey("FormaPagamentoId")]
-        public FormasPagamento FormasPagamento { get; set; }
+        public FormasPagamento? FormasPagamento { get; set; }
 
         public ICollection<DespesaParcelas> DespesaParcelas { get; set; }
     }

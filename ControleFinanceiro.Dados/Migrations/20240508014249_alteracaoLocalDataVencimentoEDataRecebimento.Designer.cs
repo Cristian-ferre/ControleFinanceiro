@@ -4,6 +4,7 @@ using ControleFinanceiro.Dados.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleFinanceiro.Dados.Migrations
 {
     [DbContext(typeof(ControleFinanceiroDbContext))]
-    partial class ControleFinanceiroDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240508014249_alteracaoLocalDataVencimentoEDataRecebimento")]
+    partial class alteracaoLocalDataVencimentoEDataRecebimento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,8 +96,7 @@ namespace ControleFinanceiro.Dados.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DespesaId"));
 
-                    b.Property<int?>("CategoriaId")
-                        .IsRequired()
+                    b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
                     b.Property<bool>("DespesaDeletado")
@@ -115,7 +117,7 @@ namespace ControleFinanceiro.Dados.Migrations
                     b.Property<DateTime>("DespesasDataInclusao")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("FormaPagamentoId")
+                    b.Property<int>("FormaPagamentoId")
                         .HasColumnType("int");
 
                     b.Property<int?>("TipoValor")
@@ -323,7 +325,9 @@ namespace ControleFinanceiro.Dados.Migrations
 
                     b.HasOne("ControleFinanceiro.Dominio.Entities.FormasPagamento", "FormasPagamento")
                         .WithMany("Despesas")
-                        .HasForeignKey("FormaPagamentoId");
+                        .HasForeignKey("FormaPagamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ControleFinanceiro.Dominio.Entities.Usuarios", "Usuarios")
                         .WithMany("Despesas")

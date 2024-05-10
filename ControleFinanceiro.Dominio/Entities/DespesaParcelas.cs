@@ -12,6 +12,9 @@ namespace ControleFinanceiro.Dominio.Entities
         public double? DespesaValor { get; set; }
 
         public bool DespesaParcelaDeletado { get; set; }
+        [Required]
+        public DateTime DespesaDataVencimento { get; set; }
+
         //Enums
         public StatusDespesas StatusDespesas { get; set; }
 

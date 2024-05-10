@@ -154,11 +154,6 @@ namespace ControleFinanceiro.Dados.Repositories
 
         private void AtualizarDespesaEProximasParcelas(Despesas despesa, DespesaParcelaDTO despesaValues)
         {
-            //despesa.DespesaName = despesaValues.DespesaName;
-            //despesa.DespesaDescricao = despesaValues.DespesaDescricao;
-            //despesa.TipoValor = despesaValues.TipoValor;
-            //despesa.CategoriaId = despesaValues.CategoriaId;
-            //despesa.FormaPagamentoId = despesaValues.FormaPagamentoId;
             var despesaParcelasProximas = _context.DespesaParcelas.Where(p => p.DespesaId == despesa.DespesaId && p.DespesaParcelaId >= despesaValues.DespesaParcelaId).ToList();
 
             foreach (var parcela in despesaParcelasProximas)

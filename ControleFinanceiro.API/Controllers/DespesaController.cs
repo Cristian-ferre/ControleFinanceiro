@@ -52,8 +52,9 @@ namespace ControleFinanceiro.API.Controllers
         /// <param name="data">Informe a Data atual, formato americano - month/day/year </param>
         [Authorize]
         [HttpGet("ObterTodas")]
-        public ActionResult ObterTodas(DateOnly data, Guid usuarioID)
+        public ActionResult ObterTodas(DateOnly data)
         {
+            Guid usuarioID = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "UsuarioId")?.Value);
 
             if (data == null)
             {

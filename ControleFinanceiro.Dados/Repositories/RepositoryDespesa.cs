@@ -35,6 +35,8 @@ namespace ControleFinanceiro.Dados.Repositories
                 _context.SaveChanges();
 
                 int count = 1;
+                DateTime dataVencimento = despesa.DespesaDataVencimento; // Inicializa a data de vencimento
+
 
                 while (count <= despesa.DespesaQuantidadeParcelas)
                 {
@@ -42,11 +44,13 @@ namespace ControleFinanceiro.Dados.Repositories
                     {
                         DespesaValor = despesa.DespesaValor,
                         StatusDespesas = Dominio.Enums.StatusDespesas.Pendente,
-                        DespesaDataVencimento = despesa.DespesaDataVencimento,
+                        DespesaDataVencimento = dataVencimento, // Usa a data de vencimento atual,
                         DespesaId = newDespesa.DespesaId
                     };
                     _context.DespesaParcelas.Add(newDespesaParcela);
                     count++;
+                    // Soma um mês à data de vencimento para o próximo ciclo
+                    dataVencimento = dataVencimento.AddMonths(1);
                 }
                 _context.SaveChanges();
 
@@ -109,6 +113,7 @@ namespace ControleFinanceiro.Dados.Repositories
 
         }
 
+        #region 
         private bool ValidarDespesa(DespesaParcelaDTO despesaValues)
         {
             return despesaValues != null && despesaValues.DespesaParcelaId > 0;
@@ -172,10 +177,12 @@ namespace ControleFinanceiro.Dados.Repositories
             }
         }
 
+        #endregion // 
+
         public IEnumerable<Despesas> ObterTodas(DateOnly data, Guid usuarioID)
         {
 
-            //// Converte DateOnly em DateTime com horário definido como meia-noite   
+            // Converte DateOnly em DateTime com horário definido como meia-noite   
             //DateTime dataEscolhida = data.ToDateTime(new TimeOnly(0, 0, 0, 0));
 
             //return _context.Despesas
@@ -184,6 +191,10 @@ namespace ControleFinanceiro.Dados.Repositories
             //        (r.DespesasData <= dataEscolhida && (r.DespesasDataFim == null || r.DespesasDataFim >= dataEscolhida)))
             //        ).ToList();
 
+
+            //var t = from d in _context.Despesas
+            //        join p in _context.DespesaParcelas on d.DespesaId equals p.DespesaId
+            //        where p.
             throw new NotImplementedException();
 
         }

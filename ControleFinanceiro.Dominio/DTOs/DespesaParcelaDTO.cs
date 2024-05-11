@@ -8,7 +8,8 @@ namespace ControleFinanceiro.Dominio.DTOs
 
         public int DespesaParcelaId { get; set; }
         public double? DespesaValor { get; set; }
-        public DateTime DespesaDataVencimento { get; set; }
+        //public DateTime DespesaDataVencimento { get; set; }
+        public int DespesaDiaVencimento { get; set; }
 
 
         public string? DespesaName { get; set; }

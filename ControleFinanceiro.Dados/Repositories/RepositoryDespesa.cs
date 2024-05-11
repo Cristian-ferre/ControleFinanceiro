@@ -2,6 +2,7 @@
 using ControleFinanceiro.Dominio.DTOs;
 using ControleFinanceiro.Dominio.Entities;
 using ControleFinanceiro.Dominio.Interfaces;
+using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 
 namespace ControleFinanceiro.Dados.Repositories
 {
@@ -139,10 +140,17 @@ namespace ControleFinanceiro.Dados.Repositories
             despesas.CategoriaId = despesaValues.CategoriaId;
             despesas.FormaPagamentoId = despesaValues.FormaPagamentoId;
 
+            //DateTime dataVencimento;
+            //var dia = 22;
+
             foreach (var parcela in despesasParcelas)
             {
+                 //dataVencimento = parcela.DespesaDataVencimento; // Inicializa a data de vencimento
+                var dataVencimentoAtual = parcela.DespesaDataVencimento; 
                 parcela.DespesaValor = despesaValues.DespesaValor;
-                parcela.DespesaDataVencimento = despesaValues.DespesaDataVencimento;
+                parcela.DespesaDataVencimento = new DateTime(dataVencimentoAtual.Year, dataVencimentoAtual.Month, despesaValues.DespesaDiaVencimento, dataVencimentoAtual.Hour, dataVencimentoAtual.Minute, dataVencimentoAtual.Second);
+
+                //dataVencimento = dataVencimento.AddMonths(1);
             }
         }
 
@@ -151,8 +159,12 @@ namespace ControleFinanceiro.Dados.Repositories
             var despesaParcela = despesa.DespesaParcelas.FirstOrDefault(p => p.DespesaParcelaId == despesaValues.DespesaParcelaId);
             if (despesaParcela != null)
             {
+                var dataVencimentoAtual = despesaParcela.DespesaDataVencimento;
+
                 despesaParcela.DespesaValor = despesaValues.DespesaValor;
-                despesaParcela.DespesaDataVencimento = despesaValues.DespesaDataVencimento;
+                //despesaParcela.DespesaDataVencimento = despesaValues.DespesaDataVencimento;
+                despesaParcela.DespesaDataVencimento = new DateTime(dataVencimentoAtual.Year, dataVencimentoAtual.Month, despesaValues.DespesaDiaVencimento, dataVencimentoAtual.Hour, dataVencimentoAtual.Minute, dataVencimentoAtual.Second);
+
                 despesaParcela.StatusDespesas = despesaValues.StatusDespesas;
             }
         }
@@ -163,8 +175,12 @@ namespace ControleFinanceiro.Dados.Repositories
 
             foreach (var parcela in despesaParcelasProximas)
             {
+                var dataVencimentoAtual = parcela.DespesaDataVencimento;
+
                 parcela.DespesaValor = despesaValues.DespesaValor;
-                parcela.DespesaDataVencimento = despesaValues.DespesaDataVencimento;
+                //parcela.DespesaDataVencimento = despesaValues.DespesaDataVencimento;
+                parcela.DespesaDataVencimento = new DateTime(dataVencimentoAtual.Year, dataVencimentoAtual.Month, despesaValues.DespesaDiaVencimento, dataVencimentoAtual.Hour, dataVencimentoAtual.Minute, dataVencimentoAtual.Second);
+
             }
         }
 
@@ -177,7 +193,7 @@ namespace ControleFinanceiro.Dados.Repositories
             }
         }
 
-        #endregion // 
+        #endregion  
 
         public IEnumerable<Despesas> ObterTodas(DateOnly data, Guid usuarioID)
         {

@@ -42,6 +42,7 @@ namespace ControleFinanceiro.Dados.Repositories
                     StatusDespesas = despesa.StatusDespesas,
                     CategoriaId = despesa.CategoriaId,
                     UsuarioId = despesa.UsuarioId,
+                    TipoValor = despesa.TipoValor
                 };
                 _context.Despesas.Add(newDespesa);
                 _context.SaveChanges();

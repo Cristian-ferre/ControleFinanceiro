@@ -41,6 +41,11 @@ namespace ControleFinanceiro.API.Controllers
 
             try
             {
+                
+                //var usuarioId = User.Identity.Claims.FirstOrDefault(i => i.GetType().ToString() == "UsuarioId");
+                
+                var usuarioId = User.Identities.FirstOrDefault(i => i.Claims.)
+
                 var Receitas = new Receitas
                 {
                     TipoValor = receitas.TipoValor,
@@ -60,7 +65,8 @@ namespace ControleFinanceiro.API.Controllers
             {
                 return StatusCode(500, new { success = false, message = "Ocorreu um erro interno no servidor" });
             }
-        }       
+        }
+
 
         /// <summary>
         /// Editar Receitas. 

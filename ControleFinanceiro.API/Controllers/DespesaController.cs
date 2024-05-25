@@ -14,9 +14,7 @@ namespace ControleFinanceiro.API.Controllers
         {
             _repositoryDespesa = repositoryDespesa;
         }
-
-
-        #region 
+       
         /// <summary>
         /// Cadastro de nova Despesa
         /// </summary>
@@ -30,12 +28,11 @@ namespace ControleFinanceiro.API.Controllers
             var result = _repositoryDespesa.Adicionar(despesa);
             return Ok(result);
         }
-        #endregion
 
         /// <summary>
         /// Editar Despesas
         /// </summary>
-        /// <param name="despesa">Informe o ID e os campos para editar</param>
+        /// <param name="despesaValues"></param>
         /// <returns>Despesa editada</returns>
         [Authorize]
         [HttpPut("Atualizar")]
@@ -73,12 +70,14 @@ namespace ControleFinanceiro.API.Controllers
         /// <summary>
         /// Excluir Despesa
         /// </summary>
-        /// <param name="despesaID">Informe o ID da Despesa</param>
-        [Authorize]
+        /// <param name="despesaRemover">Informe o ID da Despesa</param>
+        //[Authorize]
         [HttpDelete("Remover")]
-        public ActionResult Remover(int despesaID)
+        public ActionResult Remover(DespesaParcelaDTO despesaRemover)
         {
-            var result = _repositoryDespesa.Remover(despesaID);
+            Guid usuarioID = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "UsuarioId")?.Value);
+
+            var result = _repositoryDespesa.Remover(despesaRemover, usuarioID);
             return Ok(result);
         }
     }

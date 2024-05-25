@@ -31,6 +31,8 @@ namespace ControleFinanceiro.API.Controllers
         //[Authorize]
         public ActionResult ObterTodas(Guid usuarioId)
         {
+            //Guid usuarioId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "UsuarioId")?.Value);
+
             var result = _repositoryCategoria.ObterTodas(usuarioId);
             return Ok(result);
         }

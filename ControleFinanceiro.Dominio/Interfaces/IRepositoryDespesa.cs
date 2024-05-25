@@ -9,9 +9,9 @@ namespace ControleFinanceiro.Dominio.Interfaces
 
         object Atualizar (DespesaParcelaDTO despesaValues, Guid usuarioId);
 
-        object Remover(int despesaID);
+        object Remover(DespesaParcelaDTO despesaRemover, Guid usuarioId);
 
-        IEnumerable<Despesas> ObterTodas(DateOnly data, Guid usuarioID);
+        IEnumerable<object> ObterTodas(DateOnly data, Guid usuarioID);
 
         //Filtros para Obter:
     }

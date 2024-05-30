@@ -19,7 +19,7 @@ namespace ControleFinanceiro.Dominio.Entities
 
         //Enums
 
-        public StatusDespesas StatusDespesas { get; set; }
+        //public Status Status { get; set; }
 
         //Relacionamentos e FKs
         public int ReceitaId { get; set; }

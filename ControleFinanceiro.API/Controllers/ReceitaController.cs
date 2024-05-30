@@ -24,7 +24,7 @@ namespace ControleFinanceiro.API.Controllers
         /// <response code="201">Sucesso</response>
         [HttpPost("Adicionar")]
         //[Authorize]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult Adicionar([FromBody] ReceitaDTO receitas)
         {
             DateTime? receitaDataFim;

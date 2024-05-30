@@ -2,19 +2,19 @@
 
 namespace ControleFinanceiro.Dominio.DTOs
 {
-    public class DespesaParcelaDTO
+    public class ReceitaParcelaDTO
     {
-        public int? DespesaParcelaId { get; set; }
-        public double? DespesaValor { get; set; }
+        public int? ReceitaParcelaId { get; set; }
+        public double? ReceitaValor { get; set; }
         //public DateTime DespesaDataVencimento { get; set; }
-        public int? DespesaDiaVencimento { get; set; }
+        public int? ReceitaDiaVencimento { get; set; }
 
 
-        public string? DespesaName { get; set; }
-        public string? DespesaDescricao { get; set; }
+        public string? ReceitaName { get; set; }
+        public string? ReceitaDescricao { get; set; }
         public TipoValor? TipoValor { get; set; }
-        public int? CategoriaId { get; set; }
-        public int? FormaPagamentoId { get; set; }
+        //public int? CategoriaId { get; set; }
+        //public int? FormaPagamentoId { get; set; }
 
 
         //Enums
@@ -43,7 +43,5 @@ namespace ControleFinanceiro.Dominio.DTOs
 
         //Pago-Aguardando Pagamento
         public bool AtualizarPagamento { get; set; }
-
-
     }
 }

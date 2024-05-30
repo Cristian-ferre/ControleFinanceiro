@@ -16,7 +16,7 @@ namespace ControleFinanceiro.Dominio.Entities
         public DateTime DespesaDataVencimento { get; set; }
 
         //Enums
-        public StatusDespesas StatusDespesas { get; set; }
+        public Status Status { get; set; }
 
         //relacionamentos e FKs
         public int DespesaId { get; set; }

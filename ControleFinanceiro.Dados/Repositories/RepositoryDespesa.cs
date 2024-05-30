@@ -62,7 +62,7 @@ namespace ControleFinanceiro.Dados.Repositories
                     var newDespesaParcela = new DespesaParcelas
                     {
                         DespesaValor = despesa.DespesaValor,
-                        StatusDespesas = Dominio.Enums.StatusDespesas.Pendente,
+                        Status = Dominio.Enums.Status.Pendente,
                         DespesaDataVencimento = dataVencimento, // Usa a data de vencimento atual,
                         DespesaId = newDespesa.DespesaId
                     };
@@ -239,7 +239,7 @@ namespace ControleFinanceiro.Dados.Repositories
                 }
 
                 //despesaParcela.DespesaDataVencimento = new DateTime(dataVencimentoAtual.Year, dataVencimentoAtual.Month, (int)despesaValues.DespesaDiaVencimento, dataVencimentoAtual.Hour, dataVencimentoAtual.Minute, dataVencimentoAtual.Second);
-                despesaParcela.StatusDespesas = despesaValues.StatusDespesas;
+                despesaParcela.Status = despesaValues.Status;
             }
         }
 
@@ -273,7 +273,7 @@ namespace ControleFinanceiro.Dados.Repositories
             var despesaParcela = _context.DespesaParcelas.FirstOrDefault(p => p.DespesaParcelaId == despesaValues.DespesaParcelaId);
             if (despesaParcela != null)
             {
-                despesaParcela.StatusDespesas = despesaValues.StatusDespesas;
+                despesaParcela.Status = despesaValues.Status;
             }
         }
 
@@ -295,7 +295,7 @@ namespace ControleFinanceiro.Dados.Repositories
                             {
                                 despesaName = d.DespesaName,
                                 tipoValor = d.TipoValor.ToString(),
-                                statusDespesas = p.StatusDespesas.ToString(),
+                                status = p.Status.ToString(),
                                 despesaValor = p.DespesaValor,
                                 despesaDataVencimento = p.DespesaDataVencimento,
                                 despesaParcelaId = p.DespesaParcelaId

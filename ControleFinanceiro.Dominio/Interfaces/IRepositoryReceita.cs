@@ -14,6 +14,6 @@ namespace ControleFinanceiro.Dominio.Interfaces
         void Remover(Receitas receitaId);
 
 
-        void Atualizar(Receitas receitaAtualizada);
+        object Atualizar(ReceitaParcelaDTO receitaValues, Guid usuarioId);
     }
 }

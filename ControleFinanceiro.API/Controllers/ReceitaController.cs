@@ -1,4 +1,5 @@
-﻿using ControleFinanceiro.Dominio.DTOs;
+﻿using ControleFinanceiro.Dados.Repositories;
+using ControleFinanceiro.Dominio.DTOs;
 using ControleFinanceiro.Dominio.Entities;
 using ControleFinanceiro.Dominio.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -41,45 +42,12 @@ namespace ControleFinanceiro.API.Controllers
         /// <returns> receita Editada</returns>
         [HttpPut("Atualizar")]
         [Authorize]
-        public ActionResult Atualizar(int receitaId, [FromBody] ReceitaDTO receitaAtualizada)
+        public ActionResult Atualizar([FromBody] ReceitaParcelaDTO receitaAtualizada)
         {
-            DateTime? receitaDataFim;
-            if (receitaAtualizada.ReceitaQuantidadeMeses != 0)
-            {
-                //Somando a data atual com a quantidade de meses que uma receita ficara ativa
-                //receitaDataFim = receitaAtualizada.ReceitaData.AddMonths(receitaAtualizada.ReceitaQuantidadeMeses);
-            }
-            else
-            {
-                receitaDataFim = null;
-            }
+            Guid usuarioId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "UsuarioId")?.Value);
 
-            try
-            {
-                var receita = new Receitas
-                {
-                    ReceitaName = receitaAtualizada.ReceitaName,
-                    ReceitaDescricao = receitaAtualizada.ReceitaDescricao,
-                    //ReceitaData = receitaAtualizada.ReceitaData,
-                    //ReceitaDataFim = receitaDataFim,
-                    //ReceitaValor = receitaAtualizada.ReceitaValor,
-                    TipoValor = receitaAtualizada.TipoValor
-                };
-
-                _IReceita.Atualizar(receita);
-
-                return Ok(new { success = true, message = $"Receita editada com sucesso!!" });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    error = "Erro interno no servidor",
-                    message = ex.Message
-                });
-
-            }
+            var result = _IReceita.Atualizar(receitaAtualizada, usuarioId);
+            return Ok(result);
         }
 
         /// <summary>

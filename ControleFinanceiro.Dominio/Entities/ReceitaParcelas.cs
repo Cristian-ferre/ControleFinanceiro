@@ -15,7 +15,7 @@ namespace ControleFinanceiro.Dominio.Entities
 
 
         //[Required]
-        public DateTime? ReceitaDataRecebimento { get; set; }
+        public DateTime ReceitaDataRecebimento { get; set; }
 
         //Enums
 

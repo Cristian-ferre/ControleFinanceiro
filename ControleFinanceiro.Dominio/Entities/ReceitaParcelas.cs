@@ -14,12 +14,12 @@ namespace ControleFinanceiro.Dominio.Entities
         public bool ReceitaParcelaDeletado { get; set; }
 
 
-        [Required]
-        public DateTime ReceitaDataRecebimento { get; set; }
+        //[Required]
+        public DateTime? ReceitaDataRecebimento { get; set; }
 
         //Enums
 
-        //public Status Status { get; set; }
+        public Status Status { get; set; }
 
         //Relacionamentos e FKs
         public int ReceitaId { get; set; }

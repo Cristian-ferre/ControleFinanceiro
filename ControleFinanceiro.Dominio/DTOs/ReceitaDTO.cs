@@ -12,12 +12,14 @@ namespace ControleFinanceiro.Dominio.DTOs
 
         public double ReceitaValor { get; set; }
 
-        public DateTime ReceitaData { get; set; }
+        //public DateTime ReceitaData { get; set; }
+        public DateTime ReceitaDataVencimento { get; set; }
+
 
         public int ReceitaQuantidadeMeses { get; set; }
 
         public TipoValor TipoValor { get; set; }
 
-        public Guid UsuarioId { get; set; }
+        //public Guid UsuarioId { get; set; }
     }
 }

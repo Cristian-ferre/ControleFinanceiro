@@ -1,4 +1,5 @@
-﻿using ControleFinanceiro.Dominio.Entities;
+﻿using ControleFinanceiro.Dominio.DTOs;
+using ControleFinanceiro.Dominio.Entities;
 
 namespace ControleFinanceiro.Dominio.Interfaces
 {
@@ -6,7 +7,7 @@ namespace ControleFinanceiro.Dominio.Interfaces
     {
         IEnumerable<Receitas> ObterTodas(DateOnly dataParaExibir, Guid usuarioID);
 
-        void Adicionar(Receitas receitas);
+        Object Adicionar(ReceitaDTO receitas, Guid usuarioId);
 
         Receitas ObterPorId(int receitaId);
 

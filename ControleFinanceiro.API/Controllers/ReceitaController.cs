@@ -23,43 +23,15 @@ namespace ControleFinanceiro.API.Controllers
         /// <returns> receita Recém-criada</returns>
         /// <response code="201">Sucesso</response>
         [HttpPost("Adicionar")]
-        //[Authorize]
-        //[ProducesResponseType(StatusCodes.Status201Created)]
+        [Authorize]
         public ActionResult Adicionar([FromBody] ReceitaDTO receitas)
         {
-            DateTime? receitaDataFim;
-            if (receitas.ReceitaQuantidadeMeses != 0)
-            {
-                //Somando a data atual com a quantidade de meses que uma receita ficara ativa
-                //DateTime dataAtual = DateTime.Now;
-                receitaDataFim = receitas.ReceitaData.AddMonths(receitas.ReceitaQuantidadeMeses);
-            }
-            else
-            {
-                receitaDataFim = null;
-            }
+           
+            Guid usuarioId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "UsuarioId")?.Value);
 
-            try
-            {
-                var Receitas = new Receitas
-                {
-                    TipoValor = receitas.TipoValor,
-                    ReceitaName = receitas.ReceitaName,
-                    ReceitaDescricao = receitas.ReceitaDescricao,
-                    //ReceitaValor = receitas.ReceitaValor,
-                    //ReceitaData = receitas.ReceitaData,
-                    //ReceitaDataFim = receitaDataFim,
-                    UsuarioId = receitas.UsuarioId,
-                };
+            var result =  _IReceita.Adicionar(receitas, usuarioId);
 
-                _IReceita.Adicionar(Receitas);
-
-                return Json(new { success = true, message = $"{Receitas.ReceitaName} Inserido com sucesso" });
-            }
-            catch
-            {
-                return StatusCode(500, new { success = false, message = "Ocorreu um erro interno no servidor" });
-            }
+            return Ok(result);
         }       
 
         /// <summary>
@@ -75,7 +47,7 @@ namespace ControleFinanceiro.API.Controllers
             if (receitaAtualizada.ReceitaQuantidadeMeses != 0)
             {
                 //Somando a data atual com a quantidade de meses que uma receita ficara ativa
-                receitaDataFim = receitaAtualizada.ReceitaData.AddMonths(receitaAtualizada.ReceitaQuantidadeMeses);
+                //receitaDataFim = receitaAtualizada.ReceitaData.AddMonths(receitaAtualizada.ReceitaQuantidadeMeses);
             }
             else
             {

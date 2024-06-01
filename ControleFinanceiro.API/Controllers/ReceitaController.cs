@@ -4,6 +4,7 @@ using ControleFinanceiro.Dominio.Entities;
 using ControleFinanceiro.Dominio.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ControleFinanceiro.API.Controllers
 {
@@ -69,28 +70,22 @@ namespace ControleFinanceiro.API.Controllers
         /// <param >Informe a Data atual </param>
         [HttpGet("ObterTodas")]
         //[Authorize]
-        public ActionResult ObterTodas(DateOnly dataParaExibir, Guid usuarioID)
+        public ActionResult ObterTodas(DateOnly data)
         {
-            try
-            {
-                var receitasNoIntervalo = _IReceita.ObterTodas(dataParaExibir, usuarioID);
+            Guid usuarioID = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "UsuarioId")?.Value);
 
-                var receitaGetDTOs = receitasNoIntervalo.Select(receita => new ReceitaGetDTO
-                {
-                    ReceitaId = receita.ReceitaId,
-                    ReceitaName = receita.ReceitaName,
-                    ReceitaDescricao = receita.ReceitaDescricao,
-                    //ReceitaData = receita.ReceitaData,
-                    //ReceitaDataFim = receita.ReceitaDataFim,
-                    //ReceitaValor = receita.ReceitaValor,
-                }).ToList();
-
-                return Ok(receitaGetDTOs);
-            }
-            catch (Exception ex)
+            if (data == null)
             {
-                return StatusCode(500, new { success = false, error = "Erro interno no servidor", message = ex.Message });
+                return Json(new { success = false, message = "Data não informada!!" });
             }
+
+            var listReceitas = _IReceita.ObterTodas(data, usuarioID);
+            if (listReceitas == null)
+            {
+                return Json(new { success = false, message = "nenhuma receita encontrada" });
+            }
+
+            return Ok(listReceitas);
         }
     }
 }

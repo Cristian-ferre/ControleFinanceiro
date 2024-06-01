@@ -2,6 +2,8 @@
 using ControleFinanceiro.Dominio.DTOs;
 using ControleFinanceiro.Dominio.Entities;
 using ControleFinanceiro.Dominio.Interfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.ComponentModel;
 
 namespace ControleFinanceiro.Dados.Repositories
 {
@@ -14,7 +16,7 @@ namespace ControleFinanceiro.Dados.Repositories
             _context = context;
 
         }
-        public Object Adicionar(ReceitaDTO receitas, Guid usuarioId)
+        public object Adicionar(ReceitaDTO receitas, Guid usuarioId)
         {
             try
             {
@@ -320,21 +322,26 @@ namespace ControleFinanceiro.Dados.Repositories
             }
         }
 
-        public IEnumerable<Receitas> ObterTodas(DateOnly dataParaExibir, Guid usuarioID)
+        public IEnumerable<object> ObterTodas(DateOnly data, Guid usuarioId)
         {
-            //// Converte DateOnly em DateTime com horário definido como meia-noite   
-            //DateTime dataEscolhida = dataParaExibir.ToDateTime(new TimeOnly(0, 0, 0, 0));
-
-            //// Montando ENDPOINT para exibir todas a receitas Variáveis e fixas com base no ano e mes 
-            //return _context.Receitas
-            //    .Where(r => r.UsuarioId == usuarioID && (
-            //        (r.ReceitaData.Year == dataEscolhida.Year &&
-            //        r.ReceitaData.Month == dataEscolhida.Month) ||
-            //        (r.ReceitaData <= dataEscolhida && (r.ReceitaDataFim == null || r.ReceitaDataFim >= dataEscolhida)))
-            //    ).ToList();
-
-            throw new NotImplementedException();
-
+            //converte DateOnly em DateTime com horário definido como meia - noite
+            DateTime dataEscolhida = data.ToDateTime(new TimeOnly(0, 0, 0, 0));
+            var receitas = (from d in _context.Receitas
+                            join p in _context.ReceitaParcelas on d.ReceitaId equals p.ReceitaId
+                            where p.ReceitaDataRecebimento.Year == dataEscolhida.Year &&
+                                  p.ReceitaDataRecebimento.Month == dataEscolhida.Month &&
+                                  d.UsuarioId == usuarioId && p.ReceitaParcelaDeletado == false
+                            select new
+                            {
+                                receitaName = d.ReceitaName,
+                                tipoValor = d.TipoValor.ToString(),
+                                status = p.Status.ToString(),
+                                receitaValor = p.ReceitaValor,
+                                receitaDataVencimento = p.ReceitaDataRecebimento,
+                                receitaParcelaId = p.ReceitaParcelaId
+                            })
+                .ToList();
+            return receitas;
         }
 
     }

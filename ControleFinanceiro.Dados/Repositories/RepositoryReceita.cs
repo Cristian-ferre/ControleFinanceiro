@@ -16,6 +16,23 @@ namespace ControleFinanceiro.Dados.Repositories
             _context = context;
 
         }
+        //Validar e ObterReceitas- COMUM
+        #region
+        private bool ValidarReceita(ReceitaParcelaDTO receitaValues)
+        {
+            return receitaValues != null && receitaValues.ReceitaParcelaId > 0;
+        }
+
+        private Receitas ObterReceita(int? ReceitaParcelaId, Guid usuarioId)
+        {
+            var receitasParcelas = _context.ReceitaParcelas.First(p => p.ReceitaParcelaId == ReceitaParcelaId);
+            return _context.Receitas.FirstOrDefault(d => d.ReceitaId == receitasParcelas.ReceitaId && d.UsuarioId == usuarioId);
+        }
+
+        #endregion
+
+        //Adicionar receitas
+        #region
         public object Adicionar(ReceitaDTO receitas, Guid usuarioId)
         {
             try
@@ -66,17 +83,11 @@ namespace ControleFinanceiro.Dados.Repositories
             }
         }
 
-        private bool ValidarReceita(ReceitaParcelaDTO receitaValues)
-        {
-            return receitaValues != null && receitaValues.ReceitaParcelaId > 0;
-        }
+        #endregion
 
-        private Receitas ObterReceita(int? ReceitaParcelaId, Guid usuarioId)
-        {
-            var receitasParcelas = _context.ReceitaParcelas.First(p => p.ReceitaParcelaId == ReceitaParcelaId);
-            return _context.Receitas.FirstOrDefault(d => d.ReceitaId == receitasParcelas.ReceitaId && d.UsuarioId == usuarioId);
-        }
 
+        //Atulizar Receitas
+        #region
         public object Atualizar(ReceitaParcelaDTO receitaValues, Guid usuarioId)
         {
             try
@@ -225,29 +236,11 @@ namespace ControleFinanceiro.Dados.Repositories
             }
         }
 
+        #endregion
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public Receitas ObterPorId(int receitaId)
-        {
-            return _context.Receitas.FirstOrDefault(r => r.ReceitaId == receitaId);
-        }
-
-
-
-
+        //Remover Receita
+        #region
         public object Remover(ReceitaParcelaDTO receitaRemover, Guid usuarioId)
         {
             try
@@ -322,6 +315,11 @@ namespace ControleFinanceiro.Dados.Repositories
             }
         }
 
+        #endregion
+
+
+        //Obter todas receitas
+        #region
         public IEnumerable<object> ObterTodas(DateOnly data, Guid usuarioId)
         {
             //converte DateOnly em DateTime com horário definido como meia - noite
@@ -344,5 +342,11 @@ namespace ControleFinanceiro.Dados.Repositories
             return receitas;
         }
 
+        public Receitas ObterPorId(int receitaId)
+        {
+            return _context.Receitas.FirstOrDefault(r => r.ReceitaId == receitaId);
+        }
+
+        #endregion
     }
 }

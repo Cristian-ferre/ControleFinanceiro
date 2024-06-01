@@ -39,10 +39,10 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 });
 
 
-builder.Services.AddControllersWithViews().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-});
+//builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+//{
+//    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+//});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -15,7 +15,7 @@ namespace ControleFinanceiro.Dados.Repositories
             _context = context;
         }
 
-        public object Adicionar(CategoriaDTO categorias)
+        public object Adicionar(CategoriaDTO categorias, Guid usuarioId)
         {
             try
             {
@@ -28,16 +28,18 @@ namespace ControleFinanceiro.Dados.Repositories
                 {
                     CategoriaNome = categorias.CategoriaNome,
                     CategoriaDescricao = categorias.CategoriaDescricao,
-                    UsuarioId = categorias.UsuarioId,
+                    UsuarioId = usuarioId,
                 };
 
                 _context.Categorias.Add(Categorias);
                 _context.SaveChanges();
 
+                LogService.UsuariosOperacoesLog("Categoria", "Adicionar", "POST", false, usuarioId, _context);
                 return new { success = true, message = $"{Categorias.CategoriaNome} Inserido com sucesso" };
             }
             catch
             {
+                LogService.UsuariosOperacoesLog("Categoria", "Adicionar", "POST", true, usuarioId, _context);
                 return new { success = false, message = "Ocorreu um erro interno no servidor" };
             }
         }
@@ -77,10 +79,13 @@ namespace ControleFinanceiro.Dados.Repositories
                 categoria.CategoriaDeletado = true;
                 _context.SaveChanges();
 
+                LogService.UsuariosOperacoesLog("Categoria", "Remover", "DELETE", false, usuarioId, _context);
                 return new { success = true, message = "Categoria removida com sucesso!!" };
             }
             catch (Exception ex)
             {
+                LogService.UsuariosOperacoesLog("Categoria", "Remover", "DELETE", true, usuarioId, _context);
+
                 return new { success = false, message = "ALgo deu errado!!", error = ex.Message };
             }
 

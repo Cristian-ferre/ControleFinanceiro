@@ -5,7 +5,7 @@ namespace ControleFinanceiro.Dominio.Interfaces
 {
     public interface IRepositoryCategoria
     {
-        object Adicionar (CategoriaDTO categorias);
+        object Adicionar (CategoriaDTO categorias, Guid usuarioId);
 
         ICollection<Categorias> ObterTodas(Guid usuarioId);
 

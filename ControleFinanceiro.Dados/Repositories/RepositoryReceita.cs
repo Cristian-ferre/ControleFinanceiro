@@ -64,7 +64,7 @@ namespace ControleFinanceiro.Dados.Repositories
             }
         }
 
-        private bool ValidarDespesa(ReceitaParcelaDTO receitaValues)
+        private bool ValidarReceita(ReceitaParcelaDTO receitaValues)
         {
             return receitaValues != null && receitaValues.ReceitaParcelaId > 0;
         }
@@ -80,7 +80,7 @@ namespace ControleFinanceiro.Dados.Repositories
             try
             {
 
-                if (!ValidarDespesa(receitaValues))
+                if (!ValidarReceita(receitaValues))
                 {
                     return new { success = false, message = "Dados de reeita inválidos" };
                 }
@@ -246,12 +246,79 @@ namespace ControleFinanceiro.Dados.Repositories
 
 
 
-        public void Remover(Receitas receita)
+        public object Remover(ReceitaParcelaDTO receitaRemover, Guid usuarioId)
         {
-            _context.Receitas.Remove(receita);
-            _context.SaveChanges();
+            try
+            {
+                if (!ValidarReceita(receitaRemover))
+                {
+                    return new { success = false, message = "Dados de despesa inválidos" };
+                }
+
+                var receita = ObterReceita(receitaRemover.ReceitaParcelaId, usuarioId);
+                if (receita == null)
+                {
+                    return new { success = false, message = "Despesa não encontrada" };
+                }
+
+                if (receitaRemover.RemoverTodos)
+                {
+                    DeletarReceitaCompleta(receita, receitaRemover);
+                }
+                else if (receitaRemover.RemoverApenasEsse)
+                {
+                    RemoverReceitaParcela(receita, receitaRemover);
+                }
+                else if (receitaRemover.RemoverEsseProximos)
+                {
+                    RemoverEsseEProximasParcelas(receita, receitaRemover);
+                }
+
+                _context.SaveChanges();
+                LogService.UsuariosOperacoesLog("Receita", "Remover", "DELETE", false, usuarioId, _context);
+
+                return new { success = true, message = "Receita removida com sucesso!!" };
+            }
+            catch (Exception ex)
+            {
+                LogService.UsuariosOperacoesLog("Receita", "Remover", "DELETE", true, usuarioId, _context);
+
+                return new { success = false, message = "ALgo deu errado!!", error = ex.Message };
+            }
         }
 
+        private void DeletarReceitaCompleta(Receitas receita, ReceitaParcelaDTO despesaRemover)
+        {
+            var receitaFind = _context.Receitas.FirstOrDefault(d => d.ReceitaId == receita.ReceitaId);
+            receitaFind.ReceitaDeletado = true;
+
+            _context.Receitas.Update(receitaFind);
+
+            var receitaPacelasFind = _context.ReceitaParcelas.Where(d => d.ReceitaId == receitaFind.ReceitaId).ToList();
+            foreach (var item in receitaPacelasFind)
+            {
+                item.ReceitaParcelaDeletado = true;
+                _context.ReceitaParcelas.Update(item);
+
+            }
+        }
+
+        private void RemoverReceitaParcela(Receitas receita, ReceitaParcelaDTO receitaRemover)
+        {
+            var receitaPacelasFind = _context.ReceitaParcelas.FirstOrDefault(d => d.ReceitaParcelaId == receitaRemover.ReceitaParcelaId);
+            receitaPacelasFind.ReceitaParcelaDeletado = true;
+            _context.ReceitaParcelas.Update(receitaPacelasFind);
+        }
+
+        private void RemoverEsseEProximasParcelas(Receitas receita, ReceitaParcelaDTO receitaRemover)
+        {
+            var receitaPacelasFind = _context.ReceitaParcelas.Where(d => d.ReceitaId == receita.ReceitaId && d.ReceitaParcelaId >= receitaRemover.ReceitaParcelaId).ToList();
+            foreach (var item in receitaPacelasFind)
+            {
+                item.ReceitaParcelaDeletado = true;
+                _context.ReceitaParcelas.Update(item);
+            }
+        }
 
         public IEnumerable<Receitas> ObterTodas(DateOnly dataParaExibir, Guid usuarioID)
         {

@@ -11,7 +11,7 @@ namespace ControleFinanceiro.Dominio.Interfaces
 
         Receitas ObterPorId(int receitaId);
 
-        void Remover(Receitas receitaId);
+        object Remover(ReceitaParcelaDTO receitaRemover, Guid usuarioId);
 
 
         object Atualizar(ReceitaParcelaDTO receitaValues, Guid usuarioId);

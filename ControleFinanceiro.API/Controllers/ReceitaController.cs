@@ -53,29 +53,14 @@ namespace ControleFinanceiro.API.Controllers
         /// <summary>
         /// Excluir Receita
         /// </summary>
-        /// <param name="receitaId"> Informe o ID da Recita</param>
         [HttpDelete("Remover")]
         [Authorize]
-        public ActionResult Remover(int receitaId)
+        public ActionResult Remover(ReceitaParcelaDTO receitaRemover)
         {
-            var receita = _IReceita.ObterPorId(receitaId);
+            Guid usuarioId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "UsuarioId")?.Value);
 
-            if (receita == null)
-            {
-                return NotFound(new { success = false, message = "Não foi possivel remover, tente novamente!!" });
-            }
-
-            try
-            {
-                _IReceita.Remover(receita);
-
-                return Ok(new { success = true, message = $"Receita {receita.ReceitaName} removida" });
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { success = false, error = "Erro interno no servidor", message = ex.Message });
-            }
+            var result = _IReceita.Remover(receitaRemover, usuarioId);
+            return Ok(result);
         }
 
         /// <summary>

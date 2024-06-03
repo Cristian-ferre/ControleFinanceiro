@@ -60,7 +60,7 @@ namespace ControleFinanceiro.Dados.Repositories
                     {
 
                         ReceitaValor = receitas.ReceitaValor,
-                        Status = Dominio.Enums.Status.Pendente,
+                        Status = Dominio.Enums.Status.NaoRecebido,
                         ReceitaDataRecebimento = dataVencimento, // Usa a data de vencimento atual,
                         ReceitaId = newReceita.ReceitaId
                     };

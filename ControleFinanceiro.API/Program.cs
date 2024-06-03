@@ -44,6 +44,13 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 //    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 //});
 
+// Adicionar controladores com opções JSON personalizadas
+builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 

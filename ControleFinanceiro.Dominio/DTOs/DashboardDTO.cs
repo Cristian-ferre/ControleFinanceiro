@@ -11,7 +11,7 @@ namespace ControleFinanceiro.Dominio.DTOs
         public string? TotalReceita { get; set; }
 
         public  ICollection<ProximasDespesasAPagar> ProximasDespesasAPagar { get; set; }
-        public ICollection<ProximasDespesasAReceber> ProximasDespesasAReceber { get; set; }
+        public ICollection<ProximasReceitasAReceber> ProximasReceitasAReceber { get; set; }
 
     }
 
@@ -26,7 +26,7 @@ namespace ControleFinanceiro.Dominio.DTOs
         public string? DespesasData { get; set; }
     }
 
-    public class ProximasDespesasAReceber
+    public class ProximasReceitasAReceber
     {
         public string? ReceitaName { get; set; }
         public string? ReceitaValor { get; set; }

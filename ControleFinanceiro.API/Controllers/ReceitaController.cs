@@ -41,10 +41,10 @@ namespace ControleFinanceiro.API.Controllers
 
             try
             {
-                
+
                 //var usuarioId = User.Identity.Claims.FirstOrDefault(i => i.GetType().ToString() == "UsuarioId");
-                
-                var usuarioId = User.Identities.FirstOrDefault(i => i.Claims.)
+
+                var usuarioId = User.Claims.FirstOrDefault(u => u.Type.ToString() == "UsuarioId").Value;
 
                 var Receitas = new Receitas
                 {

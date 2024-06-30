@@ -32,7 +32,7 @@ namespace ControleFinanceiro.Dados.Repositories
 
         //Adicionar:
         #region
-        public object Adicionar(DespesaDTO despesa)
+        public object Adicionar(DespesaDTO despesa, Guid usuarioId)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace ControleFinanceiro.Dados.Repositories
                     TipoValor = despesa.TipoValor,
                     DespesaQuantidadeParcelas = despesa.DespesaQuantidadeParcelas == 0 ? 1 : despesa.DespesaQuantidadeParcelas,
                     DespesasDataInclusao = DateTime.Now,
-                    UsuarioId = despesa.UsuarioId,
+                    UsuarioId = usuarioId,
                     CategoriaId = despesa.CategoriaId,
                     FormaPagamentoId = despesa.FormaPagamentoId,
                 };
@@ -73,13 +73,13 @@ namespace ControleFinanceiro.Dados.Repositories
                 }
                 _context.SaveChanges();
 
-                LogService.UsuariosOperacoesLog("Despesa", "Adicionar", "POST", false, despesa.UsuarioId, _context);
+                LogService.UsuariosOperacoesLog("Despesa", "Adicionar", "POST", false, usuarioId, _context);
 
                 return new { success = true, message = $"Despesa {newDespesa.DespesaName} Adicionada com sucesso", data = newDespesa };
             }
             catch (Exception ex)
             {
-                LogService.UsuariosOperacoesLog("Despesa", "Adicionar", "POST", true, despesa.UsuarioId, _context);
+                LogService.UsuariosOperacoesLog("Despesa", "Adicionar", "POST", true, usuarioId, _context);
 
                 return new { succes = false, message = "ALgo deu errado!!", error = ex.Message };
             }

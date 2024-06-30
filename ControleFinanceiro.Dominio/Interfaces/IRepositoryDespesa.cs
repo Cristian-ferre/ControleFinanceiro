@@ -5,7 +5,7 @@ namespace ControleFinanceiro.Dominio.Interfaces
 {
     public interface IRepositoryDespesa
     {
-        object Adicionar(DespesaDTO despesa);
+        object Adicionar(DespesaDTO despesa, Guid usuarioId);
 
         object Atualizar (DespesaParcelaDTO despesaValues, Guid usuarioId);
 

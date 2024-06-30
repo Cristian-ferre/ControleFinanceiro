@@ -14,7 +14,7 @@ namespace ControleFinanceiro.Dominio.DTOs
         public int DespesaQuantidadeParcelas { get; set; }
 
         public int CategoriaId { get; set; }
-        public Guid UsuarioId { get; set; }
+        //public Guid UsuarioId { get; set; }
         public int FormaPagamentoId { get; set; }
 
         //public StatusDespesas StatusDespesas { get; set; }

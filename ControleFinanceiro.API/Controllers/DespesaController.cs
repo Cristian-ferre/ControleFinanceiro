@@ -25,7 +25,9 @@ namespace ControleFinanceiro.API.Controllers
         [HttpPost("Adicionar")]
         public ActionResult Adicionar([FromBody] DespesaDTO despesa)
         {
-            var result = _repositoryDespesa.Adicionar(despesa);
+            Guid usuarioId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "UsuarioId")?.Value);
+
+            var result = _repositoryDespesa.Adicionar(despesa, usuarioId);
             return Ok(result);
         }
 

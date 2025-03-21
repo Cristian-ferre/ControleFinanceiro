@@ -36,6 +36,7 @@ namespace ControleFinanceiro.API.Controllers
             return Ok(result);
         }       
 
+
         /// <summary>
         /// Editar Receitas. 
         /// </summary>

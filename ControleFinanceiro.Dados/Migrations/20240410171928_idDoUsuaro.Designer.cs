@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleFinanceiro.Dados.Migrations
 {
     [DbContext(typeof(ControleFinanceiroDbContext))]
-    [Migration("20240330210732_camposNullDespesas")]
-    partial class camposNullDespesas
+    [Migration("20240410171928_idDoUsuaro")]
+    partial class idDoUsuaro
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -34,16 +34,16 @@ namespace ControleFinanceiro.API.Controllers
                     string jwtKey = _configuration["JwtSettings:Key"];
                     var token = TokenService.GenerateToken(usuario, jwtKey);
 
-                    return Ok(new { Token = token, UsuarioID = usuario.UsuarioId, Nome = usuario.Nome, Email = usuario.Email });
+                    return Ok(new { Token = token });
                 }
                 else
                 {
-                    return Unauthorized("Senha incorreta");
+                    return NotFound("Email e/ou senha inválidos!");
                 }
             }
             else
             {
-                return NotFound("Usuário não encontrado");
+                return NotFound("Email e/ou senha inválidos!");
             }
         }
 

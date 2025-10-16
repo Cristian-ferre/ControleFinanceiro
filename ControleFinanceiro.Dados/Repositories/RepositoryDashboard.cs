@@ -47,7 +47,7 @@ namespace ControleFinanceiro.Dados.Repositories
                  totalReceita += _context.ReceitaParcelas
                     .Where(r => r.ReceitaId == item.ReceitaId &&
                                 r.ReceitaDataRecebimento.Year == dataEscolhida.Year &&
-                                r.ReceitaDataRecebimento.Month == dataEscolhida.Month)
+                                r.ReceitaDataRecebimento.Month == dataEscolhida.Month && r.ReceitaParcelaDeletado == false)
                     .Sum(r => (double?)r.ReceitaValor) ?? 0.0;
             }
 
@@ -65,7 +65,8 @@ namespace ControleFinanceiro.Dados.Repositories
                 totalDespesa += _context.DespesaParcelas
                    .Where(r => r.DespesaId == item.DespesaId &&
                                r.DespesaDataVencimento.Year == dataEscolhida.Year &&
-                               r.DespesaDataVencimento.Month == dataEscolhida.Month)
+                               r.DespesaDataVencimento.Month == dataEscolhida.Month &&
+                               r.DespesaParcelaDeletado == false)
                    .Sum(r => (double?)r.DespesaValor) ?? 0.0;
             }
 
@@ -81,7 +82,8 @@ namespace ControleFinanceiro.Dados.Repositories
                 aPagar += _context.DespesaParcelas
                    .Where(r => r.DespesaId == item.DespesaId && r.Status == Status.Pendente &&
                                r.DespesaDataVencimento.Year == dataEscolhida.Year &&
-                               r.DespesaDataVencimento.Month == dataEscolhida.Month)
+                               r.DespesaDataVencimento.Month == dataEscolhida.Month &&
+                               r.DespesaParcelaDeletado == false)
                    .Sum(r => (double?)r.DespesaValor) ?? 0.0;
             }
 
@@ -98,7 +100,8 @@ namespace ControleFinanceiro.Dados.Repositories
                 totalDespezaPagas += _context.DespesaParcelas
                    .Where(r => r.DespesaId == item.DespesaId && r.Status == Status.Concluido &&
                                r.DespesaDataVencimento.Year == dataEscolhida.Year &&
-                               r.DespesaDataVencimento.Month == dataEscolhida.Month)
+                               r.DespesaDataVencimento.Month == dataEscolhida.Month &&
+                               r.DespesaParcelaDeletado == false)
                    .Sum(r => (double?)r.DespesaValor) ?? 0.0;
             }
 
@@ -117,7 +120,8 @@ namespace ControleFinanceiro.Dados.Repositories
                                           join p in _context.DespesaParcelas on d.DespesaId equals p.DespesaId
                                           where d.UsuarioId == usuarioID && p.Status == Status.Pendente &&
                                                (p.DespesaDataVencimento.Year == dataEscolhida.Year &&
-                                                p.DespesaDataVencimento.Month == dataEscolhida.Month)
+                                                p.DespesaDataVencimento.Month == dataEscolhida.Month &&
+                                                p.DespesaParcelaDeletado == false)
                                           select new
                                           {
                                               d.DespesaName,
@@ -149,7 +153,8 @@ namespace ControleFinanceiro.Dados.Repositories
                                          join p in _context.ReceitaParcelas on d.ReceitaId equals p.ReceitaId
                                            where d.UsuarioId == usuarioID && p.Status == Status.NaoRecebido &&
                                               (p.ReceitaDataRecebimento.Year == dataEscolhida.Year &&
-                                               p.ReceitaDataRecebimento.Month == dataEscolhida.Month)
+                                               p.ReceitaDataRecebimento.Month == dataEscolhida.Month &&
+                                               p.ReceitaParcelaDeletado == false)
                                          select new
                                          {
                                              d.ReceitaName,
